@@ -18,8 +18,14 @@ function add() {
     const initialResult = currentResult;
     currentResult += enteredNumber;
     createAndWriteOutput('+', initialResult, enteredNumber);
-    logEntries.push(enteredNumber);
-    console.log(logEntries[1]);
+    const logEntry = {
+        operation: 'ADD',
+        prevResult: initialResult,
+        number: enteredNumber,
+        result: currentResult
+    };
+    logEntries.push(logEntry);
+    console.log(logEntries);
 }
 
 function subtract() {
@@ -51,8 +57,7 @@ multiplyBtn.addEventListener('click', multiply);
 divideBtn.addEventListener('click', divide);
 
 /*
-ARRAY:
-    - A função .push() empurra um novo elemento ao array, que por sua vez, adiciona um novo elemento a lista. E em seguida, expecificar o elemento
-      que deseja inserir na matriz. (linha 3 e 21);
-    - Para apossibilidade de gerenciar o envio de acesso de elementos. Na matriz é possível acesar seu índice. (linha 22); 
- */
+OBJECT:
+    - Note que no objeto logEntry, criamos algumas CHAVES, que por sua vez, podem ter o nome que for. E note que as chaves possuiem valores. (linhas 21 a 26);
+    - E por fim, todo o objeto está amazenado dentro de uma matriz. (linha 27);
+*/
