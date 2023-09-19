@@ -25,6 +25,7 @@ function add() {
         result: currentResult
     };
     logEntries.push(logEntry);
+    console.log(logEntry.operation);
     console.log(logEntries);
 }
 
@@ -57,7 +58,8 @@ multiplyBtn.addEventListener('click', multiply);
 divideBtn.addEventListener('click', divide);
 
 /*
-OBJECT:
-    - Note que no objeto logEntry, criamos algumas CHAVES, que por sua vez, podem ter o nome que for. E note que as chaves possuiem valores. (linhas 21 a 26);
-    - E por fim, todo o objeto está amazenado dentro de uma matriz. (linha 27);
+ACESSANDO DADOS DE UM OBJETO:
+    - Para acesar dados específicos, além de inserir o nome do obeto em um console.log(), se faz necessário especificar a chave, que por sua vez, 
+        é através de uma notação de ponto (.). (linha 28);
+    Obs: Após a inlusão do (.) no console, basta clicar em ctrl+space que aparecerá os dados disponíveis.
 */
