@@ -10,6 +10,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/styles/app.css" />
+    <script src="assets/scripts/vendor.js" defer></script>
+    <script src="assets/scripts/app.js" defer></script>
   </head>
   <body>
     <header>
@@ -29,7 +31,19 @@
       <h2 id="current-calculation">0</h2>
       <h2>Result: <span id="current-result">0</span></h2>
     </section>
-    <script src="assets/scripts/vendor.js"></script>
-    <script src="assets/scripts/app.js"></script>
   </body>
 </html>
+
+<!--
+  DEFER & ASYNC:
+    Os atributos async e defer são usados em tags de script HTML para controlar como os scripts externos são carregados em relação ao resto da página. 
+    Aqui está uma explicação detalhada:
+    
+    Sem nada: O script é carregado e executado imediatamente. Isso pode bloquear a renderização da página até que o script seja carregado e executado1.
+    
+    Async: O script é carregado em paralelo com a página e é executado assim que termina de carregar12. Isso é útil quando o script é 
+      independente do resto da página ou de outros scripts3.
+    
+    Defer: O script é carregado em paralelo com a página, mas só é executado depois que a página termina de renderizar12. 
+      Isso é útil quando o script depende do DOM totalmente carregado ou quando vários scripts devem ser executados em uma ordem específica3.
+-->
