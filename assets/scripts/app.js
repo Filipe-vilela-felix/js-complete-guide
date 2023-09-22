@@ -30,36 +30,41 @@ function writeToLog(
         console.log(typeof logEntry);
     }
 
-function add() {
+function calculateResult(calculationType) {
     const enteredNumber = getUserNumberInput();
     const initialResult = currentResult;
-    currentResult += enteredNumber;
-    createAndWriteOutput('+', initialResult, enteredNumber);
+    let mathOperator;
+    if(calculationType === 'ADD') {
+        currentResult += enteredNumber;
+        mathOperator = '+';
+    } else if(calculationType === 'SUBTRACT') {
+        currentResult -= enteredNumber;
+        mathOperator = '-';
+    } else if(calculationType === 'MULTIPLY') {
+        currentResult *= enteredNumber;
+        mathOperator = '*';
+    } else {
+        currentResult /= enteredNumber;
+        mathOperator = '/';
+    }
+    createAndWriteOutput(mathOperator, initialResult, enteredNumber);
     writeToLog('ADD', initialResult, enteredNumber, currentResult);
 }
 
+function add() {
+    calculateResult('ADD');
+}
+
 function subtract() {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult -= enteredNumber;
-    createAndWriteOutput('-', initialResult, enteredNumber);
-    writeToLog('SUBTRACT', initialResult, enteredNumber, currentResult); 
+    calculateResult('SUBTRACT');
 }
 
 function multiply() {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult *= enteredNumber;
-    createAndWriteOutput('*', initialResult, enteredNumber);
-    writeToLog('MULTIPLY', initialResult, enteredNumber, currentResult);
+    calculateResult('MULTIPLY');
 }
 
 function divide() {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult /= enteredNumber;
-    createAndWriteOutput('/', initialResult, enteredNumber);
-    writeToLog('DIVIDE', initialResult, enteredNumber, currentResult);
+    calculateResult('DEVIDE');
 }
 
 
@@ -70,8 +75,10 @@ multiplyBtn.addEventListener('click', multiply);
 divideBtn.addEventListener('click', divide);
 
 /*
-TYPEOF:
-    Essa palavra chave typeof permite avaliar o tipo de uma variável em tempo de execução.
-    Ao abrir o console do navegador e clilcar no botão '+', fazendo a leitura da função 'add', notará que aparecerá logo abixo a palavra 'object'. 
-    Fazendo jus ao typeof. (linha 30);
+IF, ELSE, ELSE-IF:
+    Note que em relação ao commit anterior, com o objetivo de "limpar" e tornar o código mais "ágil", 
+        ao invés de em cada função operacional (add(), subtract(), multiply(), divide()) possuir suas respectivas variáveis e funções que alterem seus
+        valores, fizemos uma função geral, que em seu corpo, possui todas as variáveis que se repetiam nas funções e tb o operador condicinal "if-else",
+        com o intuito de com a mudança gerada por meio do método da função calculateResult(), através das respectivas intrings inseridas em cada função,
+        o valor final era alterado.
 */
