@@ -3,6 +3,9 @@ const STRONG_ATTACK_VALUE = 17;
 const MONSTER_ATTACK_VALUE = 14;
 const HEAL_VALUE = 20;
 
+const MODE_ATACK = 'ATTACK';
+const MODE_STRONG_ATACK = 'STRONG_ATTACK';
+
 const enteredValue = prompt('Maximum life for you and the monster.', '100')
 
 let chosenMaxLife = parseInt(enteredValue);
@@ -54,9 +57,9 @@ function endRound() {
 
 function attackMonster(mode) {
   let maxDamage;
-  if (mode === 'ATTACK') {
+  if (mode === MODE_ATACK) {
     maxDamage = ATTACK_VALUE;
-  } else if (mode === 'STRONG_ATTACK') {
+  } else if (mode === MODE_STRONG_ATACK) {
     maxDamage = STRONG_ATTACK_VALUE;
   }
   const damage = dealMonsterDamage(maxDamage);
@@ -65,11 +68,11 @@ function attackMonster(mode) {
 }
 
 function attackHandler() {
-  attackMonster('ATTACK');
+  attackMonster(MODE_ATACK);
 }
 
 function strongAttackHandler() {
-  attackMonster('STRONG_ATTACK');
+  attackMonster(MODE_STRONG_ATACK);
 }
 
 function healPlayerHandler() {
@@ -90,23 +93,8 @@ strongAttackBtn.addEventListener('click', strongAttackHandler);
 healBtn.addEventListener('click', healPlayerHandler);
 
 /*
-prompt():
-    É uma função do JavaScript que permite inserir uma caixa de diálogo para o usuário.
-    Vale ressaltar que o segundo argumento da função é o valor padrão que será exibido na caixa de diálogo. Este é um parâmetro opcional. 
-        Se você não fornecer este parâmetro, a caixa de entrada de texto será exibida vazia para o usuário1. No entanto, 
-        vale ressaltar que no Internet Explorer 7 e 8, se você não fornecer este parâmetro, a string “undefined” é o valor padrão1.
-
 CONTEXTUALIZANDO O CÓDIGO:
-    A diferença do commit anterior para essse é que decidimos criar uma caixa de diálogo que permitisse o usuario inserir o valor máximo do monstro 
-        e o seu. O que antes era um valor fixo.
-
-    - Criamos uma caixa de diálogo para o usuário com a mensagem ‘Maximum life for you and the monster.’ e um valor padrão de ‘100’. 
-        O valor inserido pelo usuário é então armazenado na constante enteredValue. (linha 6);
-    
-    - Em seguida, precisavamos converter o valor inserido pelo usuário (que é uma string) em um número inteiro. O valor convertido é então armazenado na
-        vairáve chosenMaxLife. (linha 8);
-
-    - Por fim, precisávamos verificar se o valor inserido pelo usuário era um número inválido e ao mesmo tempo menor ou igual a zero, então a vairáve 
-        chosenMaxLife é definida igual a 100.
-        Obs: Note que na condicional usamo o || ao invés do &&, pois nesse caso, queremos verificar se qualquer uma das consições for verdadeira.
+    Ao invés de nas funções attackHandler() e strongAttackHandler() possuirem dentro da função attackMonster() um parâmetro, que por sua vez, é uma string,
+        criamos duas constantes globais que terão as respectivas strings para serem substiuidas dentro de attackMonster(). E assim não correr o risco de 
+        erro de digitação, nada além disso.
 */
