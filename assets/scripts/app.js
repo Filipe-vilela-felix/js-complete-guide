@@ -3,7 +3,14 @@ const STRONG_ATTACK_VALUE = 17;
 const MONSTER_ATTACK_VALUE = 14;
 const HEAL_VALUE = 20;
 
-let chosenMaxLife = 100;
+const enteredValue = prompt('Maximum life for you and the monster.', '100')
+
+let chosenMaxLife = parseInt(enteredValue);
+
+if(isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
+    chosenMaxLife = 100;
+}
+
 let currentMonsterHealth = chosenMaxLife;
 let currentPlayerHealth = chosenMaxLife;
 let hasBonusLife = true;
@@ -83,10 +90,23 @@ strongAttackBtn.addEventListener('click', strongAttackHandler);
 healBtn.addEventListener('click', healPlayerHandler);
 
 /*
-CONTEXTUALIZANDO O CÓDIGO:
-    A diferença do commit anterior para essse:
+prompt():
+    É uma função do JavaScript que permite inserir uma caixa de diálogo para o usuário.
+    Vale ressaltar que o segundo argumento da função é o valor padrão que será exibido na caixa de diálogo. Este é um parâmetro opcional. 
+        Se você não fornecer este parâmetro, a caixa de entrada de texto será exibida vazia para o usuário1. No entanto, 
+        vale ressaltar que no Internet Explorer 7 e 8, se você não fornecer este parâmetro, a string “undefined” é o valor padrão1.
 
-    - Uma nova variável "hasBonusLife" foi adicionada e inicializada com valor true. Usado para determinar se o jogador tem uma vida extra. (linha 9);
-    - A função endRound() foi modificada para incluir uma verificação de hasBonusLife. Se a saúde do jogador for 0 ou menos e hasBonusLife for verdadeiro, 
-        a função remove a vida extra do jogador, restaura a saúde do jogador para o valor inicial da rodada e exibe um alerta informando que a vida extra salvou o jogador.
+CONTEXTUALIZANDO O CÓDIGO:
+    A diferença do commit anterior para essse é que decidimos criar uma caixa de diálogo que permitisse o usuario inserir o valor máximo do monstro 
+        e o seu. O que antes era um valor fixo.
+
+    - Criamos uma caixa de diálogo para o usuário com a mensagem ‘Maximum life for you and the monster.’ e um valor padrão de ‘100’. 
+        O valor inserido pelo usuário é então armazenado na constante enteredValue. (linha 6);
+    
+    - Em seguida, precisavamos converter o valor inserido pelo usuário (que é uma string) em um número inteiro. O valor convertido é então armazenado na
+        vairáve chosenMaxLife. (linha 8);
+
+    - Por fim, precisávamos verificar se o valor inserido pelo usuário era um número inválido e ao mesmo tempo menor ou igual a zero, então a vairáve 
+        chosenMaxLife é definida igual a 100.
+        Obs: Note que na condicional usamo o || ao invés do &&, pois nesse caso, queremos verificar se qualquer uma das consições for verdadeira.
 */
