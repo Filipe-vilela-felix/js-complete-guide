@@ -1,195 +1,26 @@
-const ATTACK_VALUE = 10;
-const STRONG_ATTACK_VALUE = 17;
-const MONSTER_ATTACK_VALUE = 14;
-const HEAL_VALUE = 20;
-
-const MODE_ATTACK = 'ATTACK'; // MODE_ATTACK = 0
-const MODE_STRONG_ATTACK = 'STRONG_ATTACK'; // MODE_STRONG_ATTACK = 1
-const LOG_EVENT_PLAYER_ATTACK = 'PLAYER_ATTACK';
-const LOG_EVENT_PLAYER_STRONG_ATTACK = 'PLAYER_STRONG_ATTACK';
-const LOG_EVENT_MONSTER_ATTACK = 'MONSTER_ATTACK';
-const LOG_EVENT_PLAYER_HEAL = 'PLAYER_HEAL';
-const LOG_EVENT_GAME_OVER = 'GAME_OVER';
-
-const enteredValue = prompt('Maximum life for you and the monster.', '100');
-
-let chosenMaxLife = parseInt(enteredValue);
-let battleLog = [];
-
-if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
-  chosenMaxLife = 100;
-}
-
-let currentMonsterHealth = chosenMaxLife;
-let currentPlayerHealth = chosenMaxLife;
-let hasBonusLife = true;
-
-adjustHealthBars(chosenMaxLife);
-
-function writeToLog(ev, val, monsterHealth, playerHealth) {
-  let logEntry = {
-    event: ev,
-    value: val,
-    finalMonsterHealth: monsterHealth,
-    finalPlayerHealth: playerHealth
-  };
-  if (ev === LOG_EVENT_PLAYER_ATTACK) {
-    logEntry.target = 'MONSTER';
-  } else if (ev === LOG_EVENT_PLAYER_STRONG_ATTACK) {
-    logEntry = {
-      event: ev,
-      value: val,
-      target: 'MONSTER',
-      finalMonsterHealth: monsterHealth,
-      finalPlayerHealth: playerHealth
-    };
-  } else if (ev === LOG_EVENT_MONSTER_ATTACK) {
-    logEntry = {
-      event: ev,
-      value: val,
-      target: 'PLAYER',
-      finalMonsterHealth: monsterHealth,
-      finalPlayerHealth: playerHealth
-    };
-  } else if (ev === LOG_EVENT_PLAYER_HEAL) {
-    logEntry = {
-      event: ev,
-      value: val,
-      target: 'PLAYER',
-      finalMonsterHealth: monsterHealth,
-      finalPlayerHealth: playerHealth
-    };
-  } else if (ev === LOG_EVENT_GAME_OVER) {
-    logEntry = {
-      event: ev,
-      value: val,
-      finalMonsterHealth: monsterHealth,
-      finalPlayerHealth: playerHealth
-    };
-  }
-  battleLog.push(logEntry);
-}
-
-function reset() {
-  currentMonsterHealth = chosenMaxLife;
-  currentPlayerHealth = chosenMaxLife;
-  resetGame(chosenMaxLife);
-}
-
-function endRound() {
-  const initialPlayerHealth = currentPlayerHealth;
-  const playerDamage = dealPlayerDamage(MONSTER_ATTACK_VALUE);
-  currentPlayerHealth -= playerDamage;
-  writeToLog(
-    LOG_EVENT_MONSTER_ATTACK,
-    playerDamage,
-    currentMonsterHealth,
-    currentPlayerHealth
-  );
-
-  if (currentPlayerHealth <= 0 && hasBonusLife) {
-    hasBonusLife = false;
-    removeBonusLife();
-    currentPlayerHealth = initialPlayerHealth;
-    setPlayerHealth(initialPlayerHealth);
-    alert('You would be dead but the bonus life saved you!');
-  }
-
-  if (currentMonsterHealth <= 0 && currentPlayerHealth > 0) {
-    alert('You won!');
-    writeToLog(
-      LOG_EVENT_GAME_OVER,
-      'PLAYER WON',
-      currentMonsterHealth,
-      currentPlayerHealth
-    );
-  } else if (currentPlayerHealth <= 0 && currentMonsterHealth > 0) {
-    alert('You lost!');
-    writeToLog(
-      LOG_EVENT_GAME_OVER,
-      'MONSTER WON',
-      currentMonsterHealth,
-      currentPlayerHealth
-    );
-  } else if (currentPlayerHealth <= 0 && currentMonsterHealth <= 0) {
-    alert('You have a draw!');
-    writeToLog(
-      LOG_EVENT_GAME_OVER,
-      'A DRAW',
-      currentMonsterHealth,
-      currentPlayerHealth
-    );
-  }
-
-  if (currentMonsterHealth <= 0 || currentPlayerHealth <= 0) {
-    reset();
-  }
-}
-
-function attackMonster(mode) {
-  const maxDamage = mode === MODE_ATTACK ? ATTACK_VALUE : STRONG_ATTACK_VALUE;
-  const logEvent = 
-    mode === MODE_ATTACK 
-    ? LOG_EVENT_PLAYER_ATTACK 
-    : LOG_EVENT_PLAYER_STRONG_ATTACK;
-  // if (mode === MODE_ATTACK) {
-  //   maxDamage = ATTACK_VALUE;
-  //   logEvent = LOG_EVENT_PLAYER_ATTACK;
-  // } else if (mode === MODE_STRONG_ATTACK) {
-  //   maxDamage = STRONG_ATTACK_VALUE;
-  //   logEvent = LOG_EVENT_PLAYER_STRONG_ATTACK;
-  // }
-  const damage = dealMonsterDamage(maxDamage);
-  currentMonsterHealth -= damage;
-  writeToLog(
-    logEvent,
-    damage,
-    currentMonsterHealth,
-    currentPlayerHealth
-  );
-  endRound();
-}
-
-function attackHandler() {
-  attackMonster(MODE_ATTACK);
-}
-
-function strongAttackHandler() {
-  attackMonster(MODE_STRONG_ATTACK);
-}
-
-function healPlayerHandler() {
-  let healValue;
-  if (currentPlayerHealth >= chosenMaxLife - HEAL_VALUE) {
-    alert("You can't heal to more than your max initial health.");
-    healValue = chosenMaxLife - currentPlayerHealth;
-  } else {
-    healValue = HEAL_VALUE;
-  }
-  increasePlayerHealth(healValue);
-  currentPlayerHealth += healValue;
-  writeToLog(
-    LOG_EVENT_PLAYER_HEAL,
-    healValue,
-    currentMonsterHealth,
-    currentPlayerHealth
-  );
-  endRound();
-}
-
-function printLogHandler() {
-  console.log(battleLog);
-}
-
-attackBtn.addEventListener('click', attackHandler);
-strongAttackBtn.addEventListener('click', strongAttackHandler);
-healBtn.addEventListener('click', healPlayerHandler);
-logBtn.addEventListener('click', printLogHandler);
-
+const userName = 'Max';
+const altName = '';
+console.log(userName === 'Max'); // gera e imprime um booleano => true
+console.log(userName); // não foi tocado, ainda é uma string => 'Max'
+ 
+console.log(userName || null); // userName é verdadeiro e, portanto, retornado por || => 'Máx'
+console.log(altName || 'Max'); // altName é falsy (cadeia de caracteres vazia), portanto, 'Max' é retornado => 'Max'
+console.log(altName || ''); // tanto altName quanto '' são falsos, mas se o primeiro operando é falso, o segundo é sempre retornado => ''
+console.log(altName || null || 'Anna'); // altName e null são falsos, 'Anna' é retornado => 'Anna'
+ 
+console.log(userName && 'Anna'); // userName é verdadeiro, portanto, o segundo (!) valor é retornado => 'Anna'
+console.log(altName && 'Anna'); // altName é falsy, portanto, o primeiro valor é retornado => ''
+console.log(userName && ''); // userName é verdadeiro, portanto, o segundo valor é retornado => ''
 
 /*
-CONTEXTUALIZANDO O CÓDIGO:
-    Note que comentamos a condicional criada e adicionamos uma condicional ternária, poupando linhas e tornando o código mais limpo. (linhas 130 a 141);
-    Vale ressaltar que os dados maxDamage e logEntry eram variáveis, e após a construção de uma condicional ternária, os dados viraram constantes.
-      Isso aconteceu porque o valor inicial dessas constantes podem ser determinado por uma condição.
+TENHA SEMPRE EM MENTE: 
+  Operador ( ===, > etc. nem && ou ||) altera a variável que você pode estar usando na comparação. 
+  Nos exemplos acima, os valores armazenados em userName e altName NUNCA são alterados.
+
+  ===, > etc. apenas geram novos valores booleanos que são usados na comparação. || e && não geram booleanos,
+    eles apenas tratam os valores antes e depois deles como condições (que, portanto, precisam produzir valores booleanos e são coagidos a booleanos se necessário).
+
+  Devido aos comportamentos descritos acima, você costuma usar || em JavaScript para atribuir valores padrão/fallback a variáveis/constantes:
+    const enteredValue = ''; // let's assume this is set based on some input provided by the user, therefore it might be an empty string
+    const userName = enteredValue || 'PLACEHOLDER'; // will assign 'PLACEHOLDER' if enteredValue is an empty string
 */
