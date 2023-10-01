@@ -225,10 +225,15 @@ function printLogHandler() {
   for (let i = 0; i < 3; i++) {
     console.log('----------------')
   }
-  for (let i = 10; i > 0; i--) {
+  // for (let i = 0; i < battleLog.length; i++) {
+  //   console.log(battleLog[i]);
+  // }
+  let i = 0
+  for (const logEntry of battleLog) {
+    console.log(logEntry);
     console.log(i);
+    i++;
   }
-  console.log(battleLog);
 }
 
 attackBtn.addEventListener('click', attackHandler);
@@ -238,6 +243,16 @@ logBtn.addEventListener('click', printLogHandler);
 
 
 /*
-FOR LOOP:
-  (linhas 225 a 230);
+CONTEXTUALIZANDO O CÓDIGO:
+  O objetico neste commit é percorrer o array batteLog e imprimir cada entrada no console. E é possivel fazer de duas formas diferentes:
+    
+    Através do for 'tradicional':
+      Através do loop tradicional, ele icializa uma variável i em 0, e enquanto i for menor que battleLog, ele incrementa i e imprime a entrada do
+        log de batalha no indice i. Este método é útil quando vc precisa saber o índice atual durante a iteração. (linhas 228 a 230);
+    
+    Atravé do for...of:
+      Atravé do loop for...of, sendo uma instrução mais recente do JavaScript que implica iterações sobre arrays. Ele automaticamente percorre cada
+        elemento do array battleLog, atribuindo a variável logEntry a cada iteração. (linhas 231 a 236);
+      Obs: Este método é mais limpo e mais fácil de ler quando não precisa do índice atual e só se preocupa com os valores do array. 
+           Contudo, se houver a necessidade de rastrear o índice atual, podemos criar uma variável fora do loop para tal.(linhas 231, 234 e 235);
 */
