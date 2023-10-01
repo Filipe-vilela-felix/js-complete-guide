@@ -230,8 +230,10 @@ function printLogHandler() {
   // }
   let i = 0
   for (const logEntry of battleLog) {
-    console.log(logEntry);
-    console.log(i);
+    console.log(`#${i}`);
+    for (const key in logEntry) {
+      console.log(`${key} => ${logEntry[key]}`)
+    }
     i++;
   }
 }
@@ -243,16 +245,12 @@ logBtn.addEventListener('click', printLogHandler);
 
 
 /*
+for...in serve para percorrer todos os pares de valores-chave de um objeto.
+
 CONTEXTUALIZANDO O CÓDIGO:
-  O objetico neste commit é percorrer o array batteLog e imprimir cada entrada no console. E é possivel fazer de duas formas diferentes:
-    
-    Através do for 'tradicional':
-      Através do loop tradicional, ele icializa uma variável i em 0, e enquanto i for menor que battleLog, ele incrementa i e imprime a entrada do
-        log de batalha no indice i. Este método é útil quando vc precisa saber o índice atual durante a iteração. (linhas 228 a 230);
-    
-    Atravé do for...of:
-      Atravé do loop for...of, sendo uma instrução mais recente do JavaScript que implica iterações sobre arrays. Ele automaticamente percorre cada
-        elemento do array battleLog, atribuindo a variável logEntry a cada iteração. (linhas 231 a 236);
-      Obs: Este método é mais limpo e mais fácil de ler quando não precisa do índice atual e só se preocupa com os valores do array. 
-           Contudo, se houver a necessidade de rastrear o índice atual, podemos criar uma variável fora do loop para tal.(linhas 231, 234 e 235);
+  Agora, eu também quero implementar o for...in no printLogHandler porque lá no loop for / of, a entrada de log na verdade é um objeto.
+  E para que isso aconteça, é possível termos loops dentro de loops.
+  - A variável key será atribuida a cada chave no obejto logEntry uma após a outra. (linha 234);
+  - Imprime a chave e o valor correspondente do objeto. (linha 235);
+      ${key} é substituido pelo nome da propriedade, e ${logEntry[key]} é substituido pelo valor da propriedade correspondente.
 */
