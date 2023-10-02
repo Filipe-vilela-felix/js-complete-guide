@@ -222,9 +222,22 @@ function healPlayerHandler() {
 }
 
 function printLogHandler() {
-  for (let i = 0; i < 3; i++) {
-    console.log('----------------')
-  }
+  // for (let i = 0; i < 3; i++) {
+  //   console.log('----------------')
+  // }
+
+  // let j = 0;
+  // while (j < 3) {
+  //   console.log('----------------');
+  //   j++;
+  // }
+
+  let j = 0; 
+  do {
+    console.log('----------------');
+    j++;
+  } while (j < 3)
+
   // for (let i = 0; i < battleLog.length; i++) {
   //   console.log(battleLog[i]);
   // }
@@ -245,12 +258,11 @@ logBtn.addEventListener('click', printLogHandler);
 
 
 /*
-for...in serve para percorrer todos os pares de valores-chave de um objeto.
-
-CONTEXTUALIZANDO O CÓDIGO:
-  Agora, eu também quero implementar o for...in no printLogHandler porque lá no loop for / of, a entrada de log na verdade é um objeto.
-  E para que isso aconteça, é possível termos loops dentro de loops.
-  - A variável key será atribuida a cada chave no obejto logEntry uma após a outra. (linha 234);
-  - Imprime a chave e o valor correspondente do objeto. (linha 235);
-      ${key} é substituido pelo nome da propriedade, e ${logEntry[key]} é substituido pelo valor da propriedade correspondente.
+WHILE E DO...WHILE:
+  Ambas são estruruas de repetição assim como o for... (linhas 225 a 227);
+  While: 
+    A condição é avaliada antes da execução do bloco de código. Se a condição for verdadeira, o bloco de código é executado. (linhas 229 a 233);
+  Do...while:
+    O bloco de código é executado pelo menos uma vez, independentemente da condição ser verdadeira ou falsa, 
+    porque a condição é avaliada após a execução do bloco de código. (linhas 235 a 239);
 */
