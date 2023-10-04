@@ -223,9 +223,9 @@ function healPlayerHandler() {
 }
 
 function printLogHandler() {
-  // for (let i = 0; i < 3; i++) {
-  //   console.log('----------------')
-  // }
+  for (let i = 0; i < 3; i++) {
+    console.log('----------------')
+  }
 
   // let j = 0;
   // while (j < 3) {
@@ -234,8 +234,15 @@ function printLogHandler() {
   // }
 
   let j = 0; 
-  do {
-    console.log('----------------');
+  whileExterno: do {
+    console.log('Outer', j);
+    forInterno: for (let k = 0; k < 5; k++) {
+      if (k === 3) {
+        break whileExterno;
+        // continue whileExterno;  preigoso! => Loop infinito!
+      }
+      console.log('Inner', k);
+    }
     j++;
   } while (j < 3)
 
@@ -263,17 +270,12 @@ logBtn.addEventListener('click', printLogHandler);
 
 
 /*
-CONTEXTUALIZANDO O CÓDIGO:
-  Queremos que o código registre e imprima apenas a primeira entrada que ainda não foi registrada, em vez de todas as entradas:
-  - Criamos uma variável para controlar qual foi a última entrada que foi registrada, cujo valor é undefined. (linha 18);
+DECLARAÇÃO ROTULADA (RECURSO RARAMENTE USADO):
+  A declaração rotulada em JavaScript é uma instrução que fornece um identificador que pode ser referido usando as instruções break ou continue.
+  Obs: Tal declaração pode ser atribuida em qualquer expressão. Contudo, só faz sentido em loops.
 
-  - A estrutura condicional if... verifica se lastLoggedEntry é null ou undefined (ou seja, nenhuma entrada foi registrada ainda) ou 
-      se o índice da entrada atual é maior que lastLoggedEntry (ou seja, a entrada atual ainda não foi registrada). 
-    Se a condição for verdadeira, o código dentro do bloco if será executado. (linha 247);
-  
-  - Depois de imprimir uma entrada, a variável lastLoggedEntry é atualizada para ser o índice da entrada atual. 
-    Isso é usado para rastrear qual foi a última entrada que foi registrada. (linha 252);
-  
-  - Por fim, o BREAK interrompe o loop. 
-    Isso significa que, após imprimir uma entrada, o código sairá do loop e não imprimirá mais nenhuma entrada. (linha 253);
+CONTEXTUALIZANDO O CÓDIGO:
+  Note que para quebrarmos o loop interno, basta adicionarmos o 'break', como vimos no commit anteior. (linha 241);
+  Mas para quebrar o loop externo, que por sua vez é composto por um do...while, precisamos de uma declaração rotulada. (linhas 237 e 241);
+    A instrução break whileExterno; interrompe o loop externo rotulado como whileExterno, não apenas o loop for interno.
 */
