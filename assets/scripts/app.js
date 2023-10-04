@@ -15,6 +15,7 @@ const enteredValue = prompt('Maximum life for you and the monster.', '100');
 
 let chosenMaxLife = parseInt(enteredValue);
 let battleLog = [];
+let lastLoggedEntry;
 
 if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
   chosenMaxLife = 100;
@@ -243,9 +244,13 @@ function printLogHandler() {
   // }
   let i = 0
   for (const logEntry of battleLog) {
-    console.log(`#${i}`);
-    for (const key in logEntry) {
-      console.log(`${key} => ${logEntry[key]}`)
+    if (!lastLoggedEntry && lastLoggedEntry !== 0 || lastLoggedEntry < i) {
+      console.log(`#${i}`);
+      for (const key in logEntry) {
+        console.log(`${key} => ${logEntry[key]}`)
+      }
+      lastLoggedEntry = i;
+      break;
     }
     i++;
   }
@@ -258,11 +263,17 @@ logBtn.addEventListener('click', printLogHandler);
 
 
 /*
-WHILE E DO...WHILE:
-  Ambas são estruruas de repetição assim como o for... (linhas 225 a 227);
-  While: 
-    A condição é avaliada antes da execução do bloco de código. Se a condição for verdadeira, o bloco de código é executado. (linhas 229 a 233);
-  Do...while:
-    O bloco de código é executado pelo menos uma vez, independentemente da condição ser verdadeira ou falsa, 
-    porque a condição é avaliada após a execução do bloco de código. (linhas 235 a 239);
+CONTEXTUALIZANDO O CÓDIGO:
+  Queremos que o código registre e imprima apenas a primeira entrada que ainda não foi registrada, em vez de todas as entradas:
+  - Criamos uma variável para controlar qual foi a última entrada que foi registrada, cujo valor é undefined. (linha 18);
+
+  - A estrutura condicional if... verifica se lastLoggedEntry é null ou undefined (ou seja, nenhuma entrada foi registrada ainda) ou 
+      se o índice da entrada atual é maior que lastLoggedEntry (ou seja, a entrada atual ainda não foi registrada). 
+    Se a condição for verdadeira, o código dentro do bloco if será executado. (linha 247);
+  
+  - Depois de imprimir uma entrada, a variável lastLoggedEntry é atualizada para ser o índice da entrada atual. 
+    Isso é usado para rastrear qual foi a última entrada que foi registrada. (linha 252);
+  
+  - Por fim, o BREAK interrompe o loop. 
+    Isso significa que, após imprimir uma entrada, o código sairá do loop e não imprimirá mais nenhuma entrada. (linha 253);
 */
