@@ -11,15 +11,20 @@ const LOG_EVENT_MONSTER_ATTACK = 'MONSTER_ATTACK';
 const LOG_EVENT_PLAYER_HEAL = 'PLAYER_HEAL';
 const LOG_EVENT_GAME_OVER = 'GAME_OVER';
 
-const enteredValue = prompt('Maximum life for you and the monster.', '100');
-
-let chosenMaxLife = parseInt(enteredValue);
 let battleLog = [];
 let lastLoggedEntry;
 
-if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
-  chosenMaxLife = 100;
+function getMaxLifeValues() {
+  const enteredValue = prompt('Maximum life for you and the monster.', '100');
+
+  const parsedValue = parseInt(enteredValue);
+  if (isNaN(parsedValue) || parsedValue <= 0) {
+    throw { message: 'Invalid user input, not a number!' }
+  }
+  return parsedValue;
 }
+
+let chosenMaxLife = getMaxLifeValues();
 
 let currentMonsterHealth = chosenMaxLife;
 let currentPlayerHealth = chosenMaxLife;
@@ -270,12 +275,33 @@ logBtn.addEventListener('click', printLogHandler);
 
 
 /*
-DECLARAÇÃO ROTULADA (RECURSO RARAMENTE USADO):
-  A declaração rotulada em JavaScript é uma instrução que fornece um identificador que pode ser referido usando as instruções break ou continue.
-  Obs: Tal declaração pode ser atribuida em qualquer expressão. Contudo, só faz sentido em loops.
+Em aplicativos maiores, é bastante comum que lancemos nossos próprios erros em algumas partes deles. E para isso, usamos o 'throw'. (linha 22);
 
 CONTEXTUALIZANDO O CÓDIGO:
-  Note que para quebrarmos o loop interno, basta adicionarmos o 'break', como vimos no commit anteior. (linha 241);
-  Mas para quebrar o loop externo, que por sua vez é composto por um do...while, precisamos de uma declaração rotulada. (linhas 237 e 241);
-    A instrução break whileExterno; interrompe o loop externo rotulado como whileExterno, não apenas o loop for interno.
+  Lançando nossos próprios error no console ao invés de possiveis espaços em branco.
+
+  - Para desenvolver tal didática, alocamos as linhas abaixo para dentro de uma função nova:
+  
+      const enteredValue = prompt('Maximum life for you and the monster.', '100');
+      let chosenMaxLife = parseInt(enteredValue);
+      if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
+        chosenMaxLife = 100;
+      }
+    
+  - As alterações feitas são principalmente para melhorar a organização e a manipulação de erros.
+
+  - Agora... (linhas 17 a 27);
+      - A lógica para obter e validar o valor máximo de vida foi movida para uma função separada chamada getMaxLifeValues(). 
+          Isso torna o código mais organizado e reutilizável. (linha 17);
+
+      - A instrução throw é usada para criar erros personalizados. No contexto deste código, se o valor inserido pelo usuário não for 
+          um número ou for menor ou igual a zero, um erro é lançado com a mensagem ‘Invalid user input, not a number!’. 
+          Isso interrompe a execução do código e o erro pode ser capturado e tratado adequadamente em outro lugar no código 
+          (embora o tratamento de erros não seja mostrado neste exemplo). (linha 22);
+      
+      - A variável enteredValue foi renomeada para parsedValue para refletir que ela armazena o valor inserido após ser 
+            convertido em um número com parseInt(). (linha 20);
+      
+
+  Obs: Deve ser testado no Chrome, pois no Edge não funciona!
 */
