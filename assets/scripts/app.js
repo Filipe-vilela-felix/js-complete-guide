@@ -19,12 +19,22 @@ function getMaxLifeValues() {
 
   const parsedValue = parseInt(enteredValue);
   if (isNaN(parsedValue) || parsedValue <= 0) {
-    throw { message: 'Invalid user input, not a number!' }
+    throw { hello: 'Invalid user input, not a number!' }
   }
   return parsedValue;
 }
 
-let chosenMaxLife = getMaxLifeValues();
+let chosenMaxLife;
+
+try {
+  chosenMaxLife = getMaxLifeValues();
+} catch (error) {
+  console.log(error);
+  chosenMaxLife = 100;
+  alert('You entered something wrong, default value of 100 was used.');
+  // throw error;
+}
+
 
 let currentMonsterHealth = chosenMaxLife;
 let currentPlayerHealth = chosenMaxLife;
@@ -275,33 +285,36 @@ logBtn.addEventListener('click', printLogHandler);
 
 
 /*
-Em aplicativos maiores, é bastante comum que lancemos nossos próprios erros em algumas partes deles. E para isso, usamos o 'throw'. (linha 22);
+TRY {}, CATCH () {}, FINALLY {}:
+  O try é uma declaração em JavaScript que permite que você teste um bloco de código para verificar se há erros. A sintaxe é a seguinte:
+  try {
+    // Código a ser testado.
+  } catch (error) {
+    // Código a ser executado se ocorrer um erro.
+  } finally {
+    // Código a ser executado independentemente de ocorrer um erro ou não.
+  }
 
-CONTEXTUALIZANDO O CÓDIGO:
-  Lançando nossos próprios error no console ao invés de possiveis espaços em branco.
+CONTEXTUALIZANDO O CÓDIGO (linhas 27 a 35):
+  Em continuação ao commit anterior, a ideia agora é contornar o código através do try, que por sua vez, pode falhar. 
+  Portanto, este código tenta obter um valor máximo de vida do usuário e usa um valor padrão de 100 se o usuário inserir algo inválido. 
+    É uma boa prática usar estruturas de tratamento de erros como esta para tornar seu código mais robusto e menos propenso a falhas inesperadas.
 
-  - Para desenvolver tal didática, alocamos as linhas abaixo para dentro de uma função nova:
-  
-      const enteredValue = prompt('Maximum life for you and the monster.', '100');
-      let chosenMaxLife = parseInt(enteredValue);
-      if (isNaN(chosenMaxLife) || chosenMaxLife <= 0) {
-        chosenMaxLife = 100;
-      }
+  - Declaramos uma variável chamada chosenMaxLife. Ela será usada para armazenar o valor máximo de vida escolhido pelo usuário. (linha 27);
+
+  - O bloco try tenta executar o código dentro dele. Neste caso ele está chamando a função getMaxLifeValues() e 
+      atribuindo o valor à variável chosenMaxLife. 
+      Se ocorrer um erro ao chamar getMaxLifeValues(), a execução do bloco try será interrompida e o controle será passado para o bloco catch. (linhas 29 e 30);
     
-  - As alterações feitas são principalmente para melhorar a organização e a manipulação de erros.
-
-  - Agora... (linhas 17 a 27);
-      - A lógica para obter e validar o valor máximo de vida foi movida para uma função separada chamada getMaxLifeValues(). 
-          Isso torna o código mais organizado e reutilizável. (linha 17);
-
-      - A instrução throw é usada para criar erros personalizados. No contexto deste código, se o valor inserido pelo usuário não for 
-          um número ou for menor ou igual a zero, um erro é lançado com a mensagem ‘Invalid user input, not a number!’. 
-          Isso interrompe a execução do código e o erro pode ser capturado e tratado adequadamente em outro lugar no código 
-          (embora o tratamento de erros não seja mostrado neste exemplo). (linha 22);
-      
-      - A variável enteredValue foi renomeada para parsedValue para refletir que ela armazena o valor inserido após ser 
-            convertido em um número com parseInt(). (linha 20);
-      
-
-  Obs: Deve ser testado no Chrome, pois no Edge não funciona!
+  - O bloco catch é uma execução se ocorrer um erro no bloco try. Ele recebe o erro como um argumento (nesse caso, error) e pode fazer algo com ele.
+      Neste caso, ele registra o rorr no console, define chosenMaxLife como 100 e mostra um alerta ao usuário. (linhas 31 a 36);
+    
+OBSERVAÇÃO:
+  Vale ressalvar que há um comentário dentro do bloco catch. (linha 5);
+    Adicionar throw error no final do bloco catch irá re-lançar o erro. Isso significa que o erro será propagado para cima na pilha de chamadas e 
+      precisará ser tratado por um bloco catch externo, se houver algum. Se não houver nenhum outro bloco catch para lidar com o erro, 
+      o programa irá falhar e a execução será interrompida.
+    Re-lançar um erro pode ser útil em situações onde você quer lidar parcialmente com um erro em um nível mais baixo da pilha de chamadas 
+      (por exemplo, registrando o erro), mas também quer que ele seja tratado em um nível mais alto 
+      (por exemplo, para mostrar uma mensagem de erro ao usuário ou para tomar uma decisão sobre o fluxo de controle do programa).
 */
