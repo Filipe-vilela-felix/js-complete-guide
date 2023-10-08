@@ -4,6 +4,9 @@ const ROCK = 'ROCK';
 const PAPER = 'PAPER';
 const SCISSORS = 'SCISSOR';
 const DEFAULT_USER_CHOICE = ROCK;
+const RESULT_DRAW = 'DRAW';
+const RESULT_PLAYER_WINS = 'PLAYER_WINS';
+const RESULT_COMPUTER_WINS = 'COMPUTER_WINS';
 
 let gameIsRunnig = false;
 
@@ -20,36 +23,54 @@ const getPlayerChoice = function() {
     return selection;
 }
 
+const getComputerChoice = function() {
+    const ramdomValue = Math.random();
+    if (ramdomValue < 0.34) {
+        return ROCK;
+    } else if (ramdomValue < 0.67) {
+        return PAPER;
+    } else {
+        return SCISSORS;
+    }
+}
+
+const getWinner = function(cChoice, pChoice) {
+    if (cChoice === pChoice) {
+        return RESULT_DRAW;
+    } else if (
+        (cChoice === ROCK && pChoice === PAPER) || 
+        (cChoice === PAPER && pChoice === SCISSORS) ||
+        (cChoice === SCISSORS && pChoice === ROCK)
+    ) {
+        return RESULT_PLAYER_WINS;
+    } else {
+        return RESULT_COMPUTER_WINS;
+    }
+}
+
 startGameBtn.addEventListener('click', function() {
     if (gameIsRunnig) {
         return;
     }
     console.log('Game is starting...');
-    const playerSelection = getPlayerChoice();
-    console.log(playerSelection);
+    const PlayerChoice = getPlayerChoice();
+    const computerChoice = getComputerChoice();
+    const winner = getWinner(computerChoice, PlayerChoice);
+    console.log(winner);
 });
 
 /*
 CONTEXTUALIZANDO O CÓDIGOA:
-    - Criamos a função getPlayerChoice:
-        Esta função solicita ao usuário que faça uma escolha entre pedra, papel ou tesoura. 
-        Se a escolha do usuário não for válida (ou seja, não for nem pedra, nem papel, nem tesoura),
-        a função alerta o usuário de que sua escolha foi inválida e define a escolha como ‘Pedra’ por padrão. (linhas 10 a 21);
-    
-    - Em seguida definimos algumas constantes globais:
-        ROCK, PAPER, SCISSORS e DEFAULT_USER_CHOICE. Essas constantes representam as possíveis escolhas no jogo. (linhas 3 a 6);
-    
-    - Definimos uma variável global gameIsRunning e a inicializa como false. 
-        Esta variável é usada para verificar se o jogo já está em execução. (linha 8);
+    - Adicionamos a função getComputerChoice() para calcular a escolha do computador. Esta função gera um número aleatório entre 0 e 1. 
+        Se o número estiver entre 0 e 0.33, a escolha do computador é ROCK. 
+        Se estiver entre 0.34 e 0.67, a escolha é PAPER. Para qualquer número acima de 0.67, a escolha é SCISSORS. (linhas 26 a 35);
 
-    - Por fim, o adicionamos um ouvinte de evento ao botão ‘startGameBtn’.
-        Quando o botão é clicado, a função anônima dentro do ouvinte de evento é executada. Esta função verifica se o jogo já está em execução. 
-        Se não estiver, define gameIsRunning como true, imprime uma mensagem no console indicando que o jogo está começando e 
-        chama a função getPlayerChoice para obter a escolha do jogador. (linhas 23 a 30);
+    - O código adiciona outra função chamada getWinner para determinar o vencedor do jogo. 
+        Esta função recebe a escolha do computador e a escolha do jogador como argumentos. (linha 37);
 
-OBSERVAÇÃO:
-    JavaScript permite que você acesse propriedades e métodos (como toUpperCase() para strings) em valores primitivos como se fossem objetos. (linha 11);
-        Isso acontece porque, quando você tenta acessar uma propriedade ou método em um valor primitivo, 
-        JavaScript cria temporariamente um objeto wrapper para esse valor primitivo e então acessa a propriedade ou método nesse objeto wrapper. 
-        Isso é feito apenas temporariamente e o valor primitivo original permanece inalterado.
+    - A função getWinner primeiro verifica se a escolha do computador é igual à escolha do jogador. 
+        Se forem iguais, então é um empate e a função retorna RESULT_DRAW. Se não for um empate, a função verifica se o jogador ganhou. (linhas 38 a 48);
+
+    - Finalmente, o código chama a função getWinner com as escolhas do computador e do jogador como argumentos e 
+        armazena o resultado em uma constante chamada winner. O vencedor é então registrado no console. (linhas 58 e 59);
 */
