@@ -63,44 +63,35 @@ startGameBtn.addEventListener("click", () => {
   if (gameIsRunnig) {
     return;
   }
+  gameIsRunnig = true;
   console.log("Game is starting...");
-  const PlayerChoice = getPlayerChoice();
+  const playerChoice = getPlayerChoice();
   const computerChoice = getComputerChoice();
-  const winner = getWinner(computerChoice, PlayerChoice);
+  const winner = getWinner(computerChoice, playerChoice);
   console.log(winner);
+  let message = `You picked ${playerChoice}, computer picked ${computerChoice}, therefore you `;
+  if (winner === RESULT_DRAW) {
+    message = message + 'had a DRAW';
+  } else if (winner === RESULT_PLAYER_WINS) {
+    message = message + 'WON.';
+  } else {
+    message = message + 'LOST.';
+  }
+  alert(message);
+  gameIsRunnig = false;
 });
 
 /*
-FUNÇÃO DE SETA:
-    Sempre que tivermos uma função anônima, podemos usar uma sintaxe diferente. 
-    Nessa sintaxe, retiramos a nomenclatura "function" e adicionamos após os parênteses uma seta '=>'. Isso se chama FUNÇÃO DE SETA.
-
-    Sintaxe geral: 
-        (arg1, arg2) => {...}
-        
-
-    Sem argumentos / Parâmetros: 
-        () => {...}
-    
-    Exatamente (1) argumento / Parâmetro: 
-        arg => {...}
-
-    Exatamente uma expressão no corpo da função: 
-        (a, b) => a + b
-    
-    Mais de uma expressão no corpo da função: 
-        (a, b) => { 
-            a *= 2; 
-            return a + b; 
-        }
-
-    A vantagem de usa-la é que ela apresenta alguns truques extras:
-        Para demonstrar uma das vantagens, ao invés de deixarmos o corpo da função getWinner() como está (linhas comentadas 50 a 60), 
-            vamos substitui-lo por uma condicional ternária. (linhas 42 a 48);
-        Agora, como temos uma função de seta, onde há apenas uma expressão... 
-            podemos omitir as chaves, o ';' no final da função, e omitir a palavra chave return.
-        Para melhor entendimento, veja o exemplo comentado nas linha 36 a 39;
-
 CONTEXTUALIZANDO O CÓDIGO:
-    Alteramos todas as funções para funções de seta.
+    - A variável gameIsRunning é usada para verificar se o jogo já está em execução. 
+        Se o jogo já estiver em execução, a função retorna imediatamente e não executa o restante do código. (linha 63 a 65);
+        - Quando o jogo começa, gameIsRunning é definido como true. (linha 66);
+
+    - Criamos uma mensagem que informa ao usuário a escolha do jogador, a escolha do computador e o resultado do jogo.
+        Se o resultado for um empate, a palavra ‘DRAW’ é adicionada à mensagem.
+        Se o jogador ganhar, ‘WON’ é adicionado à mensagem. Se o computador ganhar, ‘LOST’ é adicionado à mensagem. (linhas 72 a 80);
+    
+    - A mensagem é exibida ao usuário usando o alert().
+
+    - Finalmente, gameIsRunning é definido como false para indicar que o jogo terminou.
 */
