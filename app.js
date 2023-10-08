@@ -1,8 +1,8 @@
 const startGameBtn = document.getElementById('start-game-btn');
 
-function startGame() {
+const start = function() {
     console.log('Game is starting...');
-}
+};
 
 // const person = {
 //     name: 'Max',
@@ -13,20 +13,17 @@ function startGame() {
 
 // person.greet();
 
-console.dir(startGame);
+// console.dir(startGame);
 
-startGameBtn.addEventListener('click', startGame);
+startGameBtn.addEventListener('click', start);
 
 /*
-FUNÇÕES SÃO OBJETOS:
-    Funções são um tipo especial de objeto. Isso significa que elas tem propriedades e métodos.
+    Neste commit aprendemos que é possível armazenar funções em variáveis. 
+    E quando isso é feito, deixa de ser uma declaração de função e passa a ser uma expressão de função.
+    E quando uma função passa a ser uma expressão, não precisamos de dar um nome expecífico para a função, 
+        deixando apenas como function().... (linha 3);
+    
+    Por fim, o ponto e vírgula no final da função é necessário porque estamos fazendo uma atribuição - 
+        estamos atribuindo uma função anônima à variável 'start'. (linha 5);
 
-PROPRIEDADES DE FUNÇÕES:
-    Quando usamos console.dir() em uma função, podemos ver suas propriedades internas. Algumas dessas propriedades incluem 'name' (o nome da função), 
-        'length' (o número de argumentos que uma função espera) e  'prototype' (um objeto que contém propriedades e métodos que estão para 
-        instâncias de um objeto). (linha 16);
-
-FUNÇÕES E TIPOS DE REFERÊNCIA:
-    Como funções são objetos, elas são tipos de referência. Isso significa que quando passamos uma função para outra função ou a atribui a uma 
-        variável, está passando/atribuindo uma referência aquela função, não uma cópia dela.
 */
