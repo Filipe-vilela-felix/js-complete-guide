@@ -38,10 +38,7 @@ const getComputerChoice = () => {
 //     return a + b;
 // }
 
-const getWinner = (
-    cChoice, 
-    pChoice = DEFAULT_USER_CHOICE
-) =>
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) =>
   cChoice === pChoice
     ? RESULT_DRAW
     : (cChoice === ROCK && pChoice === PAPER) ||
@@ -70,31 +67,73 @@ startGameBtn.addEventListener("click", () => {
   console.log("Game is starting...");
   const playerChoice = getPlayerChoice();
   const computerChoice = getComputerChoice();
-  let winner
+  let winner;
   if (playerChoice) {
     winner = getWinner(computerChoice, playerChoice);
   } else {
     winner = getWinner(computerChoice);
   }
-  let message = `You picked ${playerChoice ? playerChoice : DEFAULT_USER_CHOICE}, computer picked ${computerChoice}, therefore you `;
+  let message = `You picked ${
+    playerChoice ? playerChoice : DEFAULT_USER_CHOICE
+  }, computer picked ${computerChoice}, therefore you `;
   if (winner === RESULT_DRAW) {
-    message = message + 'had a DRAW';
+    message = message + "had a DRAW";
   } else if (winner === RESULT_PLAYER_WINS) {
-    message = message + 'WON.';
+    message = message + "WON.";
   } else {
-    message = message + 'LOST.';
+    message = message + "LOST.";
   }
   alert(message);
   gameIsRunnig = false;
 });
 
+// NÃO REÇLACIONADO AO JOGO:
+
+const sumUp = (a, b, ...numbers) => {
+  let sum = 0;
+  for (const num of numbers) {
+    sum += num;
+  }
+  return sum;
+};
+
+const subtractUp = function() {
+  let sum = 0;
+  for (const num of arguments) {  // Não use isso!
+    sum -= num;
+  }
+  return sum;
+};
+
+console.log(sumUp(1, 5, 10, -3, 6, 10));
+console.log(subtractUp(1, 10, 15, 20));
+
 /*
-    Um argumento padrão é um valor que é atribuído a um parâmetro de função quando nenhum argumento é fornecido durante a chamada da função.
-    O argumento padrão é usado em getWinner(). (linha 41);
+OPERADOR DE DESCANSO (REST OPERATOR) ->' ...': (linhas 92 a 98 e 108);
+  O operador de descanso é usado para representar um número indefinido de argumentos como um array, no caso, ...numbers. 
+  No exemplo, sumUp(), o operador de descanso é usado para coletar 
+    todos os argumentos adicionais passados para a função em um array chamado 'numbers'.
+  Neste caso, a e b capturam os dois primeiros argumentos passados para a função, e ...numbers captura todos os argumentos restantes.
 
+OBJETO ARGUMENTS (não recomendado): (linhas 100 a 106 e 109);
+  O objeto arguments é uma variável local disponível dentro de todas as funções não-arrow. 
+  Você pode referir-se a ele na função para obter uma lista de todos os argumentos passados para essa função. 
+  No exemplo subtractUp, arguments é usado para iterar sobre cada argumento passado para a função.
 
-CONTEXTUALIZANDO O CÓDIGO:
-    Neste caso, pChoice é o parâmetro que tem um valor padrão de DEFAULT_USER_CHOICE. (linha 43);
-    Isso significa que se a função getWinner for chamada com apenas um argumento (a escolha do computador), (linha 77);
-        o segundo argumento (a escolha do jogador) será automaticamente definido como DEFAULT_USER_CHOICE.
+OBSERVAÇÃO:
+  Não confunda operador de descanso com operador spread.
+  Embora ambos usem a mesma sintaxe...
+
+  - Operador Spread: Espalha elementos de um array (ou objeto) em elementos individuais.
+      Ex: let arr1 = [1, 2, 3];
+          let arr2 = [...arr1, 4, 5]; // arr2 agora é [1, 2, 3, 4, 5]
+        
+  - Operador de descanso: Coleta vários elementos em um array. Isso é útil em uma função que pode ter um número indefinido de argumentos.
+      Ex: function minhaFuncao(...args) {
+            console.log(args);
+          }
+          minhaFuncao(1, 2, 3); // Saída: [1, 2, 3]
+
+    Então, embora a sintaxe seja a mesma, o operador spread “expande” um array em seus elementos individuais, 
+      enquanto o operador de descanso coleta vários argumentos em um único array.
 */
