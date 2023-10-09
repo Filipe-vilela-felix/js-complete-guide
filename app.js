@@ -17,7 +17,7 @@ const getPlayerChoice = () => {
   ).toUpperCase();
   if (selection !== ROCK && selection !== PAPER && selection !== SCISSORS) {
     alert(`Invalid choice! We choice ${DEFAULT_USER_CHOICE} for you!`);
-    return DEFAULT_USER_CHOICE;
+    return;
   }
   return selection;
 };
@@ -38,7 +38,10 @@ const getComputerChoice = () => {
 //     return a + b;
 // }
 
-const getWinner = (cChoice, pChoice) =>
+const getWinner = (
+    cChoice, 
+    pChoice = DEFAULT_USER_CHOICE
+) =>
   cChoice === pChoice
     ? RESULT_DRAW
     : (cChoice === ROCK && pChoice === PAPER) ||
@@ -67,9 +70,13 @@ startGameBtn.addEventListener("click", () => {
   console.log("Game is starting...");
   const playerChoice = getPlayerChoice();
   const computerChoice = getComputerChoice();
-  const winner = getWinner(computerChoice, playerChoice);
-  console.log(winner);
-  let message = `You picked ${playerChoice}, computer picked ${computerChoice}, therefore you `;
+  let winner
+  if (playerChoice) {
+    winner = getWinner(computerChoice, playerChoice);
+  } else {
+    winner = getWinner(computerChoice);
+  }
+  let message = `You picked ${playerChoice ? playerChoice : DEFAULT_USER_CHOICE}, computer picked ${computerChoice}, therefore you `;
   if (winner === RESULT_DRAW) {
     message = message + 'had a DRAW';
   } else if (winner === RESULT_PLAYER_WINS) {
@@ -82,16 +89,12 @@ startGameBtn.addEventListener("click", () => {
 });
 
 /*
+    Um argumento padrão é um valor que é atribuído a um parâmetro de função quando nenhum argumento é fornecido durante a chamada da função.
+    O argumento padrão é usado em getWinner(). (linha 41);
+
+
 CONTEXTUALIZANDO O CÓDIGO:
-    - A variável gameIsRunning é usada para verificar se o jogo já está em execução. 
-        Se o jogo já estiver em execução, a função retorna imediatamente e não executa o restante do código. (linha 63 a 65);
-        - Quando o jogo começa, gameIsRunning é definido como true. (linha 66);
-
-    - Criamos uma mensagem que informa ao usuário a escolha do jogador, a escolha do computador e o resultado do jogo.
-        Se o resultado for um empate, a palavra ‘DRAW’ é adicionada à mensagem.
-        Se o jogador ganhar, ‘WON’ é adicionado à mensagem. Se o computador ganhar, ‘LOST’ é adicionado à mensagem. (linhas 72 a 80);
-    
-    - A mensagem é exibida ao usuário usando o alert().
-
-    - Finalmente, gameIsRunning é definido como false para indicar que o jogo terminou.
+    Neste caso, pChoice é o parâmetro que tem um valor padrão de DEFAULT_USER_CHOICE. (linha 43);
+    Isso significa que se a função getWinner for chamada com apenas um argumento (a escolha do computador), (linha 77);
+        o segundo argumento (a escolha do jogador) será automaticamente definido como DEFAULT_USER_CHOICE.
 */
