@@ -90,9 +90,13 @@ startGameBtn.addEventListener("click", () => {
 // NÃO REÇLACIONADO AO JOGO:
 
 const sumUp = (a, b, ...numbers) => {
+  const validateNumber = (number) => {
+    return isNaN(number) ? 0 : number;
+  }
+
   let sum = 0;
   for (const num of numbers) {
-    sum += num;
+    sum += validateNumber(num);
   }
   return sum;
 };
@@ -105,35 +109,17 @@ const subtractUp = function() {
   return sum;
 };
 
-console.log(sumUp(1, 5, 10, -3, 6, 10));
+console.log(sumUp(1, 5, 'fdsa', 10, -3, 6, 10));
 console.log(subtractUp(1, 10, 15, 20));
 
 /*
-OPERADOR DE DESCANSO (REST OPERATOR) ->' ...': (linhas 92 a 98 e 108);
-  O operador de descanso é usado para representar um número indefinido de argumentos como um array, no caso, ...numbers. 
-  No exemplo, sumUp(), o operador de descanso é usado para coletar 
-    todos os argumentos adicionais passados para a função em um array chamado 'numbers'.
-  Neste caso, a e b capturam os dois primeiros argumentos passados para a função, e ...numbers captura todos os argumentos restantes.
+  O que difere este código do commit anterior, é o aprendizado que nos permite inserir uma função dentro de uma função. (linhas 93 a 95);
 
-OBJETO ARGUMENTS (não recomendado): (linhas 100 a 106 e 109);
-  O objeto arguments é uma variável local disponível dentro de todas as funções não-arrow. 
-  Você pode referir-se a ele na função para obter uma lista de todos os argumentos passados para essa função. 
-  No exemplo subtractUp, arguments é usado para iterar sobre cada argumento passado para a função.
-
-OBSERVAÇÃO:
-  Não confunda operador de descanso com operador spread.
-  Embora ambos usem a mesma sintaxe...
-
-  - Operador Spread: Espalha elementos de um array (ou objeto) em elementos individuais.
-      Ex: let arr1 = [1, 2, 3];
-          let arr2 = [...arr1, 4, 5]; // arr2 agora é [1, 2, 3, 4, 5]
-        
-  - Operador de descanso: Coleta vários elementos em um array. Isso é útil em uma função que pode ter um número indefinido de argumentos.
-      Ex: function minhaFuncao(...args) {
-            console.log(args);
-          }
-          minhaFuncao(1, 2, 3); // Saída: [1, 2, 3]
-
-    Então, embora a sintaxe seja a mesma, o operador spread “expande” um array em seus elementos individuais, 
-      enquanto o operador de descanso coleta vários argumentos em um único array.
+CONTEXTUALIZANDO O CÓDIGO:
+  A função sumUp() é uma função externa que aceita um número indeterminado de argumentos (através do operador de descanso). (linha 92); 
+  Dentro dessa função sumUp(), temos outra função chamada validateNumber(). Essa é a nossa função aninhada. (linhas 93 a 95);
+  
+  A função aninhada validateNumber() é usada para verificar se o valor fornecido é um número. 
+  Se o valor não for um número, ele retorna 0; caso contrário, retorna o próprio número. 
+  Essa função aninhada é usada para garantir que estamos somando apenas valores numéricos.
 */
