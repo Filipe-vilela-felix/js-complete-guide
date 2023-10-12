@@ -1,23 +1,28 @@
-// RESUMO DA SEÇÃO 7 ATÉ A AULA 10:
+/* 
+A TRAVESSIA DO DOM:
+    A travessia do DOM é um conceito que se refere à seleção de elementos no DOM e à navegação entre esses elementos, 
+        como seus filhos, irmãos, pais, etc.
 
-const h1 = document.getElementById('main-title');   // Selecionando o elemento HTML a partir de seu id e armazenando-o na constante h1. 
+    Existem termos específicos usados na travessia do DOM:
+        - Filho: Um nó filho direto de um elemento. Por exemplo, em <div><p><em></em></p></div>, a tag <p> é um filho da tag <div>.
 
-// A partir de seu armazenamento, podemos ter acesso a certas propriedades:
+        - Descendente: Um nó filho direto ou indireto de um elemento. No exemplo anterior, 
+            tanto a tag <p> quanto a tag <em> são descendentes da tag <div>.
+        
+        - Pai: O nó ou elemento pai direto de outro elemento. No exemplo anterior, a tag <div> é pai da tag <p>.
 
-h1.textContent = 'Some new title';      // A propriedade .textContent representa o conteúdo do texto de um nó e seus descendentes, que no momento, está sendo alterado.
-h1.style.color = 'white';       // A propriedade style retorna um objeto que representa os atributos de estilo do elemento, que nesse momento, está sendo alterado.
-h1.style.backgroundColor = 'black';     // Similarmente, estamos definindo a propriedade backgroundColor do objeto de estilo como ‘black’, o que muda a cor de fundo do elemento.
+        - Ancestral: Uma relação direta ou indireta dos pais. No exemplo anterior, a tag <div> é um ancestral tanto da tag <p> quanto da tag <em>.
 
-const li = document.querySelector('li:last-of-type');       // O método querySelector retorna o primeiro elemento que corresponde a um ou mais seletores CSS especificados no documento. Neste caso, estamos selecionando o último elemento ‘li’.
-li.textContent = li.textContent + (' (Changed!)');      // Novamente, estamos usando a propriedade textContent para alterar o conteúdo de texto do elemento ‘li’, adicionando ’ (Changed!)’ ao final.
+    Você pode selecionar elementos filhos ou descendentes de um elemento. Para isso, você pode usar as propriedades childNodes e children. 
+        childNodes seleciona todos os nós filhos, incluindo nós de texto, enquanto children seleciona apenas nós de elementos filhos, ou seja, 
+        apenas objetos de elemento HTML.
 
-const body = document.body;     //  Esta propriedade retorna o elemento <body> ou <frameset> do documento atual.
+    Você também pode usar o seletor de consulta e outros métodos semelhantes em qualquer nó de elemento selecionado para mergulhar mais fundo nos 
+        descendentes.
 
-// const listItemElements = document.querySelectorAll('li');
-const listItemElements = document.getElementsByTagName('li');       // Este método retorna uma coleção HTML ao vivo de elementos com o nome da tag especificada, neste caso, ‘li’.
+    Existem propriedades especiais como firstChild, firstElementChild, lastChild e lastElementChild 
+        que permitem selecionar o primeiro ou último nó filho ou nó de elemento filho de um determinado elemento.
 
-for (const listItemEl of listItemElements) {
-    console.dir(listItemEl);
-}   // Aqui, estamos usando um loop for…of para iterar sobre cada item na coleção listItemElements. 
-// Para cada item, usamos console.dir() para exibir uma lista interativa das propriedades do objeto JavaScript fornecido 
-//     (neste caso, o elemento da lista).
+    Para selecionar elementos irmãos no mesmo nível, você pode usar as propriedades previousSibling, previousElementSibling, 
+        nextSibling e nextElementSibling. Essas propriedades permitem obter o irmão direto antes ou depois do elemento selecionado atualmente.
+*/
