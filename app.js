@@ -1,28 +1,29 @@
+const section = document.querySelector('section');
+const button = document.querySelector('button');
+
+// section.style.backgroundColor = 'blue';
+
+section.className = 'red-bg';
+
+button.addEventListener('click', () => {    
+    // if (section.className === 'red-bg visible') {
+    //     section.className = 'red-bg invisible';   
+    // } else {
+    //     section.className = 'red-bg visible';
+    // }
+    section.classList.toggle('invisible');
+});
+
 /* 
-A TRAVESSIA DO DOM:
-    A travessia do DOM é um conceito que se refere à seleção de elementos no DOM e à navegação entre esses elementos, 
-        como seus filhos, irmãos, pais, etc.
+    A função de callback faz uso do método toggle do objeto classList do elemento section. 
+    Este método alterna entre adicionar e remover uma classe ao elemento, dependendo se a classe já existe ou não. 
+    Neste caso, a classe que está sendo alternada é ‘invisible’. Provavelmente, essa classe altera a visibilidade do elemento section. (linhas 8 e 14);
 
-    Existem termos específicos usados na travessia do DOM:
-        - Filho: Um nó filho direto de um elemento. Por exemplo, em <div><p><em></em></p></div>, a tag <p> é um filho da tag <div>.
+    O método toggle usado é basicamente o que a estrutura condicional faria. (linhas 9 a 13);
 
-        - Descendente: Um nó filho direto ou indireto de um elemento. No exemplo anterior, 
-            tanto a tag <p> quanto a tag <em> são descendentes da tag <div>.
-        
-        - Pai: O nó ou elemento pai direto de outro elemento. No exemplo anterior, a tag <div> é pai da tag <p>.
-
-        - Ancestral: Uma relação direta ou indireta dos pais. No exemplo anterior, a tag <div> é um ancestral tanto da tag <p> quanto da tag <em>.
-
-    Você pode selecionar elementos filhos ou descendentes de um elemento. Para isso, você pode usar as propriedades childNodes e children. 
-        childNodes seleciona todos os nós filhos, incluindo nós de texto, enquanto children seleciona apenas nós de elementos filhos, ou seja, 
-        apenas objetos de elemento HTML.
-
-    Você também pode usar o seletor de consulta e outros métodos semelhantes em qualquer nó de elemento selecionado para mergulhar mais fundo nos 
-        descendentes.
-
-    Existem propriedades especiais como firstChild, firstElementChild, lastChild e lastElementChild 
-        que permitem selecionar o primeiro ou último nó filho ou nó de elemento filho de um determinado elemento.
-
-    Para selecionar elementos irmãos no mesmo nível, você pode usar as propriedades previousSibling, previousElementSibling, 
-        nextSibling e nextElementSibling. Essas propriedades permitem obter o irmão direto antes ou depois do elemento selecionado atualmente.
+CONTEXTUALIZANDO O CÓDIGO:
+    O botão, quando clicado, aciona uma função que alterna a visibilidade do elemento de seção.
+    Ele faz isso adicionando ou removendo a classe ‘invisible’ do elemento de seção. 
+    Se a classe ‘invisible’ estiver definida nos estilos CSS para tornar um elemento invisível (por exemplo, display: none), 
+        clicar no botão mostrará e ocultará o elemento de seção.
 */
