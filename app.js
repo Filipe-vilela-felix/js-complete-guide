@@ -1,29 +1,23 @@
-/*
-  - Tudo no DOM é um nó. As tags HTML são nós de elemento.
+// RESUMO DA SEÇÃO 7 ATÉ A AULA 10:
 
-  - Além dos nós de elemento, existem outros tipos de nós, como nós de texto.
+const h1 = document.getElementById('main-title');   // Selecionando o elemento HTML a partir de seu id e armazenando-o na constante h1. 
 
-  - Os elementos são nós que são criados a partir de tags HTML renderizadas.
+// A partir de seu armazenamento, podemos ter acesso a certas propriedades:
 
-  - Em nós de elemento, você tem propriedades e métodos especiais para interagir com os elementos, 
-      alterar seu estilo, alterar seu conteúdo e assim por diante.
+h1.textContent = 'Some new title';      // A propriedade .textContent representa o conteúdo do texto de um nó e seus descendentes, que no momento, está sendo alterado.
+h1.style.color = 'white';       // A propriedade style retorna um objeto que representa os atributos de estilo do elemento, que nesse momento, está sendo alterado.
+h1.style.backgroundColor = 'black';     // Similarmente, estamos definindo a propriedade backgroundColor do objeto de estilo como ‘black’, o que muda a cor de fundo do elemento.
 
-  - Você normalmente trabalha mais com elementos do que com nós de texto porque geralmente deseja adicionar um novo elemento HTML, 
-      remover um, alterar o estilo de um, etc.
-  - As propriedades e métodos exatos disponíveis em cada elemento dependem do tipo de elemento. 
-      Por exemplo, em uma entrada onde o usuário pode inserir conteúdo, você tem maneiras de ler essa entrada.
+const li = document.querySelector('li:last-of-type');       // O método querySelector retorna o primeiro elemento que corresponde a um ou mais seletores CSS especificados no documento. Neste caso, estamos selecionando o último elemento ‘li’.
+li.textContent = li.textContent + (' (Changed!)');      // Novamente, estamos usando a propriedade textContent para alterar o conteúdo de texto do elemento ‘li’, adicionando ’ (Changed!)’ ao final.
 
-  - Você pode selecionar elementos, criar e removê-los com a ajuda de Javascript.
-  
-  - Os nós de texto são na maioria das vezes apenas criados automaticamente quando você configura o conteúdo de texto de um elemento para 
-      um novo conteúdo de texto.
+const body = document.body;     //  Esta propriedade retorna o elemento <body> ou <frameset> do documento atual.
 
-NODE VS ELEMENTO:
-  Um nó é uma entidade abstrata que pode ser um elemento, um atributo, um texto ou qualquer outro tipo de objeto que possa ser representado no DOM.
+// const listItemElements = document.querySelectorAll('li');
+const listItemElements = document.getElementsByTagName('li');       // Este método retorna uma coleção HTML ao vivo de elementos com o nome da tag especificada, neste caso, ‘li’.
 
-  Um elemento, por outro lado, é um tipo específico de nó que representa uma tag HTML no documento. 
-  Ele pode conter outros nós, como nós de texto ou até mesmo outros nós de elemento, formando uma estrutura de árvore.
-
-  Portanto, todos os elementos são nós, mas nem todos os nós são elementos. 
-  Por exemplo, um nó de texto (que contém texto dentro de uma tag HTML) é um nó, mas não é um elemento.
-*/
+for (const listItemEl of listItemElements) {
+    console.dir(listItemEl);
+}   // Aqui, estamos usando um loop for…of para iterar sobre cada item na coleção listItemElements. 
+// Para cada item, usamos console.dir() para exibir uma lista interativa das propriedades do objeto JavaScript fornecido 
+//     (neste caso, o elemento da lista).
