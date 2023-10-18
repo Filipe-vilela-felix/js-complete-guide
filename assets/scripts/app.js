@@ -1,33 +1,33 @@
-const addMovieModal = document.getElementById("add-modal");
+const addMovieModal = document.getElementById('add-modal');
 // const addMovieModal = document.querySelector('#add-modal');
 // const addMovieModal = document.body.children[1];
-const startAddMovieButton = document.querySelector("header button");
-// const startAddMovieButton = document.querySelector('button').lastElementChild;
-const backdrop = document.getElementById("backdrop");
-// const background = document.body.childre[0];
-// const background = document.body.firstElementChild;
-const cancelAddMovieButton = addMovieModal.querySelector(".btn.btn--passive");
+const startAddMovieButton = document.querySelector('header button');
+// const startAddMovieButton = document.querySelector('header').lastElementChild;
+const backdrop = document.getElementById('backdrop');
+// const backdrop = document.body.firstElementChild;
+const cancelAddMovieButton = addMovieModal.querySelector('.btn--passive');
 const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
-const userInputs = addMovieModal.querySelectorAll("input");
+const userInputs = addMovieModal.querySelectorAll('input');
 // const userInputs = addMovieModal.getElementsByTagName('input');
 const entryTextSection = document.getElementById('entry-text');
+const deleteMovieModal = document.getElementById('delete-modal');
 
 const movies = [];
 
-const updateUi = () => {
-    if (movies.length === 0) {
-        entryTextSection.style.display = 'block';
-    } else {
-        entryTextSection.style.display = 'none';
-    }
+const updateUI = () => {
+  if (movies.length === 0) {
+    entryTextSection.style.display = 'block';
+  } else {
+    entryTextSection.style.display = 'none';
+  }
 };
 
-const deleteMovieHandler = (movieId) => {
+const deleteMovie = movieId => {
   let movieIndex = 0;
   for (const movie of movies) {
     if (movie.id === movieId) {
       break;
-    } 
+    }
     movieIndex++;
   }
   movies.splice(movieIndex, 1);
@@ -36,41 +36,57 @@ const deleteMovieHandler = (movieId) => {
   // listRoot.removeChild(listRoot.children[movieIndex]);
 };
 
+const closeMovieDeletionModal = () => {
+  toggleBackdrop();
+  deleteMovieModal.classList.remove('visible');
+};
+
+const deleteMovieHandler = movieId => {
+  deleteMovieModal.classList.add('visible');
+  toggleBackdrop();
+  // deleteMovie(movieId);
+};
+
 const renderNewMovieElement = (id, title, imageUrl, rating) => {
-    const newMovieElement = document.createElement('li');
-    newMovieElement.className = 'movie-element';
-    newMovieElement.innerHTML = `
-        <div class="movie-element__image">
-            <img src="${imageUrl}" alt="${title}" />
-        </div>
-        <div class="movie-element__info">
-            <h2>${title}</h2>
-            <p>${rating}/5 stars</p>
-        </div>
-    `;
-    newMovieElement.addEventListener('click', deleteMovieHandler.bind(null, id));
-    const listRoot = document.getElementById('movie-list');
-    listRoot.append(newMovieElement);
+  const newMovieElement = document.createElement('li');
+  newMovieElement.className = 'movie-element';
+  newMovieElement.innerHTML = `
+    <div class="movie-element__image">
+      <img src="${imageUrl}" alt="${title}">
+    </div>
+    <div class="movie-element__info">
+      <h2>${title}</h2>
+      <p>${rating}/5 stars</p>
+    </div>
+  `;
+  newMovieElement.addEventListener('click', deleteMovieHandler.bind(null, id));
+  const listRoot = document.getElementById('movie-list');
+  listRoot.append(newMovieElement);
 };
 
 const toggleBackdrop = () => {
-  backdrop.classList.toggle("visible");
+  backdrop.classList.toggle('visible');
 };
 
-const toggleMovieModal = () => {
-  addMovieModal.classList.toggle("visible");
+const closeMovieModal = () => {
+  addMovieModal.classList.remove('visible');
+};
+
+const showMovieModal = () => {
+  // function() {}
+  addMovieModal.classList.add('visible');
   toggleBackdrop();
 };
 
-const clearMovieModal = () => {
+const clearMovieInput = () => {
   for (const usrInput of userInputs) {
-    usrInput.value = "";
+    usrInput.value = '';
   }
 };
 
 const cancelAddMovieHandler = () => {
-  toggleMovieModal();
-  clearMovieModal();
+  closeMovieModal();
+  clearMovieInput();
 };
 
 const addMovieHandler = () => {
@@ -79,13 +95,13 @@ const addMovieHandler = () => {
   const ratingValue = userInputs[2].value;
 
   if (
-    titleValue.trim() === "" ||
-    imageUrlValue.trim() === "" ||
-    ratingValue.trim() === "" ||
+    titleValue.trim() === '' ||
+    imageUrlValue.trim() === '' ||
+    ratingValue.trim() === '' ||
     +ratingValue < 1 ||
     +ratingValue > 5
   ) {
-    alert("Please enter valid values (rating between 1 and 5)");
+    alert('Please enter valid values (rating between 1 and 5).');
     return;
   }
 
@@ -93,46 +109,50 @@ const addMovieHandler = () => {
     id: Math.random().toString(),
     title: titleValue,
     image: imageUrlValue,
-    rating: ratingValue,
+    rating: ratingValue
   };
 
   movies.push(newMovie);
   console.log(movies);
-  toggleMovieModal();
-  clearMovieModal();
+  closeMovieModal();
+  toggleBackdrop();
+  clearMovieInput();
   renderNewMovieElement(
-    newMovie.id, 
-    newMovie.title, 
-    newMovie.image, 
+    newMovie.id,
+    newMovie.title,
+    newMovie.image,
     newMovie.rating
   );
-  updateUi();
+  updateUI();
 };
 
 const backdropClickHandler = () => {
-  toggleMovieModal();
+  closeMovieModal();
+  closeMovieDeletionModal();
 };
 
-startAddMovieButton.addEventListener("click", toggleMovieModal);
-backdrop.addEventListener("click", backdropClickHandler);
-cancelAddMovieButton.addEventListener("click", cancelAddMovieHandler);
-confirmAddMovieButton.addEventListener("click", addMovieHandler);
+startAddMovieButton.addEventListener('click', showMovieModal);
+backdrop.addEventListener('click', backdropClickHandler);
+cancelAddMovieButton.addEventListener('click', cancelAddMovieHandler);
+confirmAddMovieButton.addEventListener('click', addMovieHandler);
 
 /*     
 CONTEXTUALIZANDO O CÓDIGO:
-  Neste commit o intuito é remover os filmes adicionados clicando nos mesmos. 
+  Adicionamos um novo modal, que será exibido quando um filme está prestes a ser excluído, 
+    dando ao usuário a chance de confirmar ou cancelar a ação. Isso melhora a experiência do usuário, evitando exclusões acidentais.
 
-  - Adicionamos um manipulador de eventos "click" ao newMovieElement: Quando o elemento de filme é clicado, ele chama a função deleteMovieHandler(),
-      passando o id do filme como argumento. Isso permite que a função saiba qual fime remover.
-      
-  - Adicionando uma função de deletar filme: A função deleteMovieHandler() é responsável por remover um filme da lista de filmes.
-      - Criamos uma variável que será usada para rastrear o índice do filme que queremos remover. (linha 26);
-      - Criamos um loop para percorrer cada filme na lista. (linha 27);
-      - Dentro do loop, verificamos se o id do filme atual é igual ao id do filme que queremos remover. Se for, ele sai do loop. (linhas 28 a 30);
-      - Quando encontrarmos o filme que queremos remover, movieIndex será o índice desse filme na lista. (linha 31);
-      - Removemos o filme da lista de filmes. (linha 33);
-      - Removemos o elemento do filme correspondente do DOM. (linha 35);
+  - A função closeMovieDeletionModal é responsável por fechar o modal de exclusão de filme. 
+      Ela faz isso removendo a classe ‘visible’ do modal de exclusão de filme e chamando a função toggleBackdrop, 
+      que controla a exibição do pano de fundo do modal. (linhas 39 a 42);
 
-  - Geramos um número aleatório entre 0 (inclusive) e 1 (exclusivo), e toString() converte esse número em uma string. 
-      O resultado é um id único para cada novo filme. (linha 93);s
+  - A função deleteMovieHandler é chamada quando um filme precisa ser excluído. 
+      Ela adiciona a classe ‘visible’ ao modal de exclusão de filme, tornando-o visível para o usuário, 
+      e chama a função toggleBackdrop para exibir o pano de fundo do modal. 
+      A linha que realmente exclui o filme (deleteMovie(movieId)) está atualmente comentada, 
+      indicando que essa funcionalidade pode ser adicionada em um commit futuro. (linhas 45 a 48);
+
+OBSERVAÇO:
+  Muitas linhas foram alteradas em todo o código, não somente as presentes na contextualização acima. linhas em que outrora geravam bug.
+  Houve alterações com relação ao nome de algumas funções, inclusão e adição de lihnhas etc...
+  Contudo, para melhor entendimento, se faz necesário reassistir a aula de número 178.
 */
