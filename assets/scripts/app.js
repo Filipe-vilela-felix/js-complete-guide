@@ -14,12 +14,21 @@ const deleteMovieModal = document.getElementById('delete-modal');
 
 const movies = [];
 
+const toggleBackdrop = () => {
+  backdrop.classList.toggle('visible');
+};
+
 const updateUI = () => {
   if (movies.length === 0) {
     entryTextSection.style.display = 'block';
   } else {
     entryTextSection.style.display = 'none';
   }
+};
+
+const closeMovieDeletionModal = () => {
+  toggleBackdrop();
+  deleteMovieModal.classList.remove('visible');
 };
 
 const deleteMovieHandler = movieId => {
@@ -34,18 +43,23 @@ const deleteMovieHandler = movieId => {
   const listRoot = document.getElementById('movie-list');
   listRoot.children[movieIndex].remove();
   // listRoot.removeChild(listRoot.children[movieIndex]);
-};
-
-const closeMovieDeletionModal = () => {
-  toggleBackdrop();
-  deleteMovieModal.classList.remove('visible');
+  closeMovieDeletionModal()
 };
 
 const starDeleteMovieHandler = movieId => {
   deleteMovieModal.classList.add('visible');
   toggleBackdrop();
+
   const cancelDeletionButton = deleteMovieModal.querySelector('.btn--passive');
-  const confirmDeletionButton = deleteMovieModal.querySelector('.btn--danger');
+  let confirmDeletionButton = deleteMovieModal.querySelector('.btn--danger');
+
+  confirmDeletionButton.replaceWith(confirmDeletionButton.cloneNode(true));
+
+  confirmDeletionButton = deleteMovieModal.querySelector('.btn--danger');
+
+  // confirmAddMovieButton.removeEventListener('click', deleteMovieHandler.bind(null, movieId)); // will not work :(
+
+  cancelDeletionButton.removeEventListener('click', closeMovieDeletionModal);
 
   cancelDeletionButton.addEventListener('click', closeMovieDeletionModal);
   confirmDeletionButton.addEventListener(
@@ -75,10 +89,6 @@ const renderNewMovieElement = (id, title, imageUrl, rating) => {
   listRoot.append(newMovieElement);
 };
 
-const toggleBackdrop = () => {
-  backdrop.classList.toggle('visible');
-};
-
 const closeMovieModal = () => {
   addMovieModal.classList.remove('visible');
 };
@@ -97,6 +107,7 @@ const clearMovieInput = () => {
 
 const cancelAddMovieHandler = () => {
   closeMovieModal();
+  toggleBackdrop();
   clearMovieInput();
 };
 
@@ -140,6 +151,7 @@ const addMovieHandler = () => {
 const backdropClickHandler = () => {
   closeMovieModal();
   closeMovieDeletionModal();
+  clearMovieInput();
 };
 
 startAddMovieButton.addEventListener('click', showMovieModal);
@@ -149,18 +161,5 @@ confirmAddMovieButton.addEventListener('click', addMovieHandler);
 
 /*     
 CONTEXTUALIZANDO O CÓDIGO:
-  O intuito deste commit é permitir que o usuário confirme ou cancele a exclusão de um filme. 
-  Contudo, acabou gerando um bug que será resolvido no próximo commit.
-
-  - Modificamos a função starDeleteMovieHandler() para adicionar funcionalidades de exclusão de filme.
-      Agora, quando um filme precisar ser excluido, além de tornar o modal visível e exibir o plano de fundo do modal, 
-      adicionamos event listeners aos botões ‘cancelar’ e ‘confirmar’ no modal. (linhas 47 a 54);
-
-  - O botão ‘cancelar’ agora chama a função closeMovieDeletionModal quando clicado, fechando o modal de exclusão de filme. (linha 50);
-      
-  - O botão ‘confirmar’ agora chama a função deleteMovieHandler quando clicado, passando o movieId como argumento. 
-      Isso permitirá que o filme seja excluído quando essa funcionalidade for implementada. (linhas 51 a 54);
-
-OBSERVAÇO:
-  Note que houve alteração do nome de algumas funções para melhor entendimento e menos conflitos no código.
+  Neste commit, foram feitas algumas pequenas alterações com o intuito de concertar alguns bugs apresentados.
 */
