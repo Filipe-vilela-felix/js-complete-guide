@@ -10,8 +10,33 @@ const cancelAddMovieButton = addMovieModal.querySelector(".btn.btn--passive");
 const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
 const userInputs = addMovieModal.querySelectorAll("input");
 // const userInputs = addMovieModal.getElementsByTagName('input');
+const entryTextSection = document.getElementById('entry-text');
 
 const movies = [];
+
+const updateUi = () => {
+    if (movies.length === 0) {
+        entryTextSection.style.display = 'block';
+    } else {
+        entryTextSection.style.display = 'none';
+    }
+};
+
+const renderNewMovieElement = (title, imageUrl, rating) => {
+    const newMovieElement = document.createElement('li');
+    newMovieElement.className = 'movie-element';
+    newMovieElement.innerHTML = `
+        <div class="movie-element__image">
+            <img src="${imageUrl}" alt="${title}" />
+        </div>
+        <div class="movie-element__info">
+            <h2>${title}</h2>
+            <p>${rating}/5 stars</p>
+        </div>
+    `;
+    const listRoot = document.getElementById('movie-list');
+    listRoot.append(newMovieElement);
+};
 
 const toggleBackdrop = () => {
   backdrop.classList.toggle("visible");
@@ -59,6 +84,8 @@ const addMovieHandler = () => {
   console.log(movies);
   toggleMovieModal();
   clearMovieModal();
+  renderNewMovieElement(newMovie.title, newMovie.image, newMovie.rating);
+  updateUi();
 };
 
 const backdropClickHandler = () => {
@@ -76,22 +103,16 @@ confirmAddMovieButton.addEventListener("click", addMovieHandler);
     E trabalhar com dados dessa forma não há a necessidade de trabalharmos com DOM (nesse caso).
 
 CONTEXTUALIZANDO O CÓDIGO:
-    Neste commit, quando o botão de confirmação é clicado,a função addMovieHandler é chamada.
-        Esta função além de validar os inputs (commit anterior), armazena-nos em um objeto, que por sua vez, se torna um índice em um array.
-        E por fim, criamos uma função com o intuito de "limpar" os dados inseridos em cada imput.
+    Neste commit, nosso foco é renderizar os itens de filme na tela. Por exemplo, queremos atualizar a UI (Interface do uusário), 
+        e remover a "caixa" que contém o texto ("Your personal movie database!") sempre que houver filme.
 
-    - Criação da lista de filmes: Uma nova variável chamada movies foi adicionada, 
-        que é uma lista vazia onde os filmes adicionados pelo usuário serão armazenados. (linha 14);
+    - Atualização da Interface do Usuário (UI): Foi criada uma nova função chamada updateUi. Esta função verifica se há filmes na lista de filmes. 
+        Se a lista estiver vazia, a seção de texto de entrada é exibida. Se houver filmes na lista, a seção de texto de entrada é ocultada. 
+        Isso melhora a experiência do usuário, pois evita que eles vejam uma seção de texto de entrada desnecessária quando 
+            já existem filmes na lista. (linhas 17 a 23);
 
-    - Função para limpar o modal de filme: Uma nova função chamada clearMovieModal foi criada. 
-        Esta função percorre todos os campos de entrada do usuário e limpa seus valores. (linhas 31 a 34);
-
-    - Adição de um novo filme à lista de filmes: Dentro da função addMovieHandler, 
-        um novo objeto newMovie é criado com os valores dos campos de entrada do usuário. 
-        Este objeto é então adicionado à lista de filmes. (linhas 52 a 58);
-
-    - Limpeza do modal após a clicagem no botão de cancelar modal. (linha 33);
-    
-    - Limpeza do modal após a adição de um filme: Após a adição de um filme à lista, a função clearMovieModal é chamada para limpar os 
-        campos de entrada. (linha 61);
+    - Renderização de Novos Elementos de Filme: Foi criada uma nova função chamada renderNewMovieElement. 
+        Esta função cria um novo elemento li com uma classe movie-element e preenche seu conteúdo HTML 
+            com os detalhes do filme (título, imagem e classificação). 
+            Em seguida, este novo elemento é anexado à lista de filmes na interface do usuário. (linhas 25 a 39 e 87);
 */
