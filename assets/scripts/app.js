@@ -22,7 +22,21 @@ const updateUi = () => {
     }
 };
 
-const renderNewMovieElement = (title, imageUrl, rating) => {
+const deleteMovieHandler = (movieId) => {
+  let movieIndex = 0;
+  for (const movie of movies) {
+    if (movie.id === movieId) {
+      break;
+    } 
+    movieIndex++;
+  }
+  movies.splice(movieIndex, 1);
+  const listRoot = document.getElementById('movie-list');
+  listRoot.children[movieIndex].remove();
+  // listRoot.removeChild(listRoot.children[movieIndex]);
+};
+
+const renderNewMovieElement = (id, title, imageUrl, rating) => {
     const newMovieElement = document.createElement('li');
     newMovieElement.className = 'movie-element';
     newMovieElement.innerHTML = `
@@ -34,6 +48,7 @@ const renderNewMovieElement = (title, imageUrl, rating) => {
             <p>${rating}/5 stars</p>
         </div>
     `;
+    newMovieElement.addEventListener('click', deleteMovieHandler.bind(null, id));
     const listRoot = document.getElementById('movie-list');
     listRoot.append(newMovieElement);
 };
@@ -75,6 +90,7 @@ const addMovieHandler = () => {
   }
 
   const newMovie = {
+    id: Math.random().toString(),
     title: titleValue,
     image: imageUrlValue,
     rating: ratingValue,
@@ -84,7 +100,12 @@ const addMovieHandler = () => {
   console.log(movies);
   toggleMovieModal();
   clearMovieModal();
-  renderNewMovieElement(newMovie.title, newMovie.image, newMovie.rating);
+  renderNewMovieElement(
+    newMovie.id, 
+    newMovie.title, 
+    newMovie.image, 
+    newMovie.rating
+  );
   updateUi();
 };
 
@@ -97,22 +118,21 @@ backdrop.addEventListener("click", backdropClickHandler);
 cancelAddMovieButton.addEventListener("click", cancelAddMovieHandler);
 confirmAddMovieButton.addEventListener("click", addMovieHandler);
 
-/* 
-    Ao criarmos uma matriz de nome "movies", desejamos adicionar a cada índice um fime (objeto). Mas vale ressaltar que não o tornará visível
-        na tela, pois o intuito será para o gerenciamento de dados em JS e não apenas como elementos HTML. 
-    E trabalhar com dados dessa forma não há a necessidade de trabalharmos com DOM (nesse caso).
-
+/*     
 CONTEXTUALIZANDO O CÓDIGO:
-    Neste commit, nosso foco é renderizar os itens de filme na tela. Por exemplo, queremos atualizar a UI (Interface do uusário), 
-        e remover a "caixa" que contém o texto ("Your personal movie database!") sempre que houver filme.
+  Neste commit o intuito é remover os filmes adicionados clicando nos mesmos. 
 
-    - Atualização da Interface do Usuário (UI): Foi criada uma nova função chamada updateUi. Esta função verifica se há filmes na lista de filmes. 
-        Se a lista estiver vazia, a seção de texto de entrada é exibida. Se houver filmes na lista, a seção de texto de entrada é ocultada. 
-        Isso melhora a experiência do usuário, pois evita que eles vejam uma seção de texto de entrada desnecessária quando 
-            já existem filmes na lista. (linhas 17 a 23);
+  - Adicionamos um manipulador de eventos "click" ao newMovieElement: Quando o elemento de filme é clicado, ele chama a função deleteMovieHandler(),
+      passando o id do filme como argumento. Isso permite que a função saiba qual fime remover.
+      
+  - Adicionando uma função de deletar filme: A função deleteMovieHandler() é responsável por remover um filme da lista de filmes.
+      - Criamos uma variável que será usada para rastrear o índice do filme que queremos remover. (linha 26);
+      - Criamos um loop para percorrer cada filme na lista. (linha 27);
+      - Dentro do loop, verificamos se o id do filme atual é igual ao id do filme que queremos remover. Se for, ele sai do loop. (linhas 28 a 30);
+      - Quando encontrarmos o filme que queremos remover, movieIndex será o índice desse filme na lista. (linha 31);
+      - Removemos o filme da lista de filmes. (linha 33);
+      - Removemos o elemento do filme correspondente do DOM. (linha 35);
 
-    - Renderização de Novos Elementos de Filme: Foi criada uma nova função chamada renderNewMovieElement. 
-        Esta função cria um novo elemento li com uma classe movie-element e preenche seu conteúdo HTML 
-            com os detalhes do filme (título, imagem e classificação). 
-            Em seguida, este novo elemento é anexado à lista de filmes na interface do usuário. (linhas 25 a 39 e 87);
+  - Geramos um número aleatório entre 0 (inclusive) e 1 (exclusivo), e toString() converte esse número em uma string. 
+      O resultado é um id único para cada novo filme. (linha 93);s
 */
