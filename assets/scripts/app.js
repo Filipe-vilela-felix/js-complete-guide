@@ -1,57 +1,81 @@
 const addMovieModal = document.getElementById('add-modal');
 // const addMovieModal = document.querySelector('#add-modal');
 // const addMovieModal = document.body.children[1];
-
 const startAddMovieButton = document.querySelector('header button');
 // const startAddMovieButton = document.querySelector('button').lastElementChild;
-
 const backdrop = document.getElementById('backdrop');
 // const background = document.body.childre[0];
 // const background = document.body.firstElementChild;
-
 const cancelAddMovieButton = addMovieModal.querySelector('.btn.btn--passive');
+const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
+const userInputs = addMovieModal.querySelectorAll('input');
+// const userInputs = addMovieModal.getElementsByTagName('input');
 
 const toggleBackdrop = () => {
     backdrop.classList.toggle('visible');
-}
+};
 
 const toggleMovieModal = () => {
     addMovieModal.classList.toggle('visible'); 
     toggleBackdrop();
-}
+};
 
-const cancelAddMovie = () => {
+const cancelAddMovieHandler = () => {
     toggleMovieModal();
-}
+};
+
+const addMovieHandler = () => {
+    const titleValue = userInputs[0].value;
+    const imageUrlValue = userInputs[1].value;
+    const ratingValue = userInputs[2].value;
+
+    if (
+        titleValue.trim() === '' || 
+        imageUrlValue.trim() === '' || 
+        ratingValue.trim() === '' || 
+        +ratingValue < 1 || 
+        +ratingValue > 5) {
+            alert('Please enter valid values (rating between 1 and 5)');
+            return;
+        }
+};
 
 const backdropClickHandler = () => {
     toggleMovieModal();
-}
+};
 
 startAddMovieButton.addEventListener('click', toggleMovieModal);
-backdrop.addEventListener('click', toggleMovieModal);
-cancelAddMovieButton.addEventListener('click', cancelAddMovie);
+backdrop.addEventListener('click', backdropClickHandler);
+cancelAddMovieButton.addEventListener('click', cancelAddMovieHandler);
+confirmAddMovieButton.addEventListener('click', addMovieHandler);
 
 /* 
-    Em comparação ao commit anterior, onde o objetivo era apenas tornar o modal funcional alterando uma classe css no proprio js. Nesse commit,
-        permitimos que o usuário feche o modal clicando no plano de fundo ou no botão de cancelar. Melhorando na usuabilidade da interface. 
+    .trim() serve para remover os espaços em branco no início e no fim de uma string.
+
+    Ao invés de usarmos parseInt() para converter uma string em um número inteiro, podemos usar o "+" no lugar. (linhas 36 e 37) 
 
 CONTEXTUALIZANDO O CÓDIGO:
-    - Adicionado o botão de cancelar: Foi adicionada uma nova variável chamada cancelAddMovieButton, 
-        que seleciona o botão de cancelar no modal de adicionar filme. (linha 12);
+    Neste commit, Quando o botão de confirmação é clicado, a função addMovieHandler é chamada. 
+        Esta função recupera os valores dos campos de entrada do usuário. Se algum dos valores não for válido 
+        (por exemplo, se estiver vazio ou se a classificação não estiver entre 1 e 5), uma mensagem de alerta será exibida e 
+        a função será interrompida. Se todos os valores forem válidos, a função continuará a execução. 
+        No entanto, atualmente, mesmo que os valores sejam válidos, a função não faz nada além disso.
 
-    - Função para alternar o plano de fundo: Foi criada uma nova função chamada toggleBackdrop, 
-        que alterna a visibilidade do plano de fundo quando chamada. (linhas 14 a 16);
+    - Adicionado o botão de confirmação: Foi adicionada uma nova variável chamada confirmAddMovieButton, 
+        que seleciona o botão de confirmação no modal de adicionar filme. (linha 10);
+    
+    - Adicionado os campos de entrada do usuário: 
+        Foi adicionada uma nova variável chamada userInputs, que seleciona todos os campos de entrada no modal de adicionar filme. (linha 11);
 
-    - Atualização da função toggleMovieModal: A função toggleMovieModal foi atualizada para chamar a nova função toggleBackdrop, 
-        fazendo com que o plano de fundo alterne junto com o modal. (linhas 18 a 21);
+    - Função para adicionar um filme: Foi criada uma nova função chamada addMovieHandler. 
+        Esta função recupera os valores dos campos de entrada do usuário e verifica se eles são válidos. 
+        Se algum dos valores não for válido (por exemplo, se estiver vazio ou se a classificação não estiver entre 1 e 5), 
+        uma mensagem de alerta será exibida e a função será interrompida. 
+        Se todos os valores forem válidos, a função continuará a execução. (linhas 27 a 41 e 50);
 
-    - Função para cancelar a adição do filme: Foi criada uma nova função chamada cancelAddMovie, 
-        que chama a função toggleMovieModal para fechar o modal. (linhas 23 a 25);
+    - Manipulador de clique no botão de confirmação: Foi adicionado um novo ouvinte de evento para o botão de confirmação. 
+        Quando o botão de confirmação é clicado, a função addMovieHandler é chamada. (linha 50);
 
-    - Manipulador de clique no plano de fundo: Foi criada uma nova função chamada backdropClickHandler, 
-        que chama a função toggleMovieModal quando o plano de fundo é clicado. (linha 27 a 29);
-
-    - Novos ouvintes de eventos: Foram adicionados novos ouvintes de eventos para o plano de fundo e para o botão de cancelar. 
-        Quando o plano de fundo é clicado, o modal é fechado. Quando o botão de cancelar é clicado, a adição do filme é cancelada. (linhas 32 e 33);
+OBSERVAÇÃO:
+    Com finalidade de padronização, adicionamos a palavra ...Handler às funções que apenas são chamadas através de um ouvinte de evento.
 */
