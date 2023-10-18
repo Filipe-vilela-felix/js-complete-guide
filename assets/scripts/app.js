@@ -22,7 +22,7 @@ const updateUI = () => {
   }
 };
 
-const deleteMovie = movieId => {
+const deleteMovieHandler = movieId => {
   let movieIndex = 0;
   for (const movie of movies) {
     if (movie.id === movieId) {
@@ -41,9 +41,17 @@ const closeMovieDeletionModal = () => {
   deleteMovieModal.classList.remove('visible');
 };
 
-const deleteMovieHandler = movieId => {
+const starDeleteMovieHandler = movieId => {
   deleteMovieModal.classList.add('visible');
   toggleBackdrop();
+  const cancelDeletionButton = deleteMovieModal.querySelector('.btn--passive');
+  const confirmDeletionButton = deleteMovieModal.querySelector('.btn--danger');
+
+  cancelDeletionButton.addEventListener('click', closeMovieDeletionModal);
+  confirmDeletionButton.addEventListener(
+    'click', 
+    deleteMovieHandler.bind(null, movieId)
+  );
   // deleteMovie(movieId);
 };
 
@@ -59,7 +67,10 @@ const renderNewMovieElement = (id, title, imageUrl, rating) => {
       <p>${rating}/5 stars</p>
     </div>
   `;
-  newMovieElement.addEventListener('click', deleteMovieHandler.bind(null, id));
+  newMovieElement.addEventListener(
+    'click', 
+    starDeleteMovieHandler.bind(null, id)
+  );
   const listRoot = document.getElementById('movie-list');
   listRoot.append(newMovieElement);
 };
@@ -138,21 +149,18 @@ confirmAddMovieButton.addEventListener('click', addMovieHandler);
 
 /*     
 CONTEXTUALIZANDO O CÓDIGO:
-  Adicionamos um novo modal, que será exibido quando um filme está prestes a ser excluído, 
-    dando ao usuário a chance de confirmar ou cancelar a ação. Isso melhora a experiência do usuário, evitando exclusões acidentais.
+  O intuito deste commit é permitir que o usuário confirme ou cancele a exclusão de um filme. 
+  Contudo, acabou gerando um bug que será resolvido no próximo commit.
 
-  - A função closeMovieDeletionModal é responsável por fechar o modal de exclusão de filme. 
-      Ela faz isso removendo a classe ‘visible’ do modal de exclusão de filme e chamando a função toggleBackdrop, 
-      que controla a exibição do pano de fundo do modal. (linhas 39 a 42);
+  - Modificamos a função starDeleteMovieHandler() para adicionar funcionalidades de exclusão de filme.
+      Agora, quando um filme precisar ser excluido, além de tornar o modal visível e exibir o plano de fundo do modal, 
+      adicionamos event listeners aos botões ‘cancelar’ e ‘confirmar’ no modal. (linhas 47 a 54);
 
-  - A função deleteMovieHandler é chamada quando um filme precisa ser excluído. 
-      Ela adiciona a classe ‘visible’ ao modal de exclusão de filme, tornando-o visível para o usuário, 
-      e chama a função toggleBackdrop para exibir o pano de fundo do modal. 
-      A linha que realmente exclui o filme (deleteMovie(movieId)) está atualmente comentada, 
-      indicando que essa funcionalidade pode ser adicionada em um commit futuro. (linhas 45 a 48);
+  - O botão ‘cancelar’ agora chama a função closeMovieDeletionModal quando clicado, fechando o modal de exclusão de filme. (linha 50);
+      
+  - O botão ‘confirmar’ agora chama a função deleteMovieHandler quando clicado, passando o movieId como argumento. 
+      Isso permitirá que o filme seja excluído quando essa funcionalidade for implementada. (linhas 51 a 54);
 
 OBSERVAÇO:
-  Muitas linhas foram alteradas em todo o código, não somente as presentes na contextualização acima. linhas em que outrora geravam bug.
-  Houve alterações com relação ao nome de algumas funções, inclusão e adição de lihnhas etc...
-  Contudo, para melhor entendimento, se faz necesário reassistir a aula de número 178.
+  Note que houve alteração do nome de algumas funções para melhor entendimento e menos conflitos no código.
 */
