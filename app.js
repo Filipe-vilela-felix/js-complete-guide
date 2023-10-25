@@ -1,30 +1,45 @@
-const hobbies = ['Sports', 'Cooking'];
-hobbies.push('Reading');
-hobbies.unshift('Coding');
-const poppedElement = hobbies.pop();
-const shiftedElement = hobbies.shift();
+let hobbies = ['Sports', 'Cooking'];
 console.log(hobbies);
-console.log(poppedElement);
-console.log(shiftedElement);
 
-hobbies[1] = 'Coding';
-console.log(hobbies);
+hobbies.splice(1, 0, 'Good food');
+console.log('1)', hobbies);
+
+hobbies = ['Sports', 'Cooking'];
+hobbies.splice(0, 1);
+console.log('2)', hobbies);
+
+hobbies = ['Sports', 'Cooking'];
+hobbies.splice(0);
+console.log('3)', hobbies);
+
+hobbies = ['Sports', 'Cooking'];
+hobbies.splice(1);
+console.log('4)', hobbies);
+
+hobbies = ['Sports', 'Cooking'];
+hobbies.splice(-1, 1);  // Exclusivo do .splice()
+console.log('5)', hobbies);
 
 /* 
-  .push():
-    Adiciona novos elementos no final do array.(linha 2);
+  O método .splice() é extremamtente útil, pois nos permite fazer todos os tipos de coisas com matrizes.
+  Obs: É um método que só está disponível em matrizes reais. Não em iteráveis, não em objetos do tipo array.
 
-  .unshift():
-    Adiciona novos elementos no início do array. (linha 2);
+  Esse método leva pelo menos dois argumentos, contudo, há outra versão para mais argumentos. 
+    1) Inserir elementos dentro de um array: (linhas );
+        O primiero argumento é o índice em que desejo inserir o elemento. 
+        O segundo argumento é a quantidade de índices que desejo excluir (nesse caso: 0).
+        A partir do terceiro argumento são os elementos que desejo inserir no array.
 
-  .pop():
-    Remove o último elemento de um array. (linhas 4 e 6);
-    Para que o mesmo retorne o elemento removido é necessário atribuir a uma nova variável. (linhas 4 e 7);
+    2) Excluir elementos dentro de um array: (linhas );
+        O primeiro argumento é o índice em que desejo excluir.
+        O segundo argumento é a quantidade de índices que desejo excluir.
 
-  .shift():
-    Remove o primeiro elemento de um array. (linhas 5 e 6);
-    Para que o mesmo retorne o elemento removido é necessário atribuir a uma nova variável. (linha 5 e 8);
-    Esse método modifica o array original, removendo o primeiro elemento e deslocando todos os outros elementos para um índice inferior.
+    3) Excluir todos os índices da matriz: (linha );
+        Para isso, basta digitar um único argumento, como 0.
 
-  Se precisarmos adicionar ou manipular itens em diferentes lugares de um array usamos o acesso direto ao índice. (linha 10);
+    4) Excluir todos os ítem exceto um: (linha );
+        Basta informar qual índice deseja que permaneça.
+
+    5) Excluir através de um índice negativo. (linha );
+        Inserir um índice negativo pode funcionar para exluir um elemento de trás pra frente.
 */
