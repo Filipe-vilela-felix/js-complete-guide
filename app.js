@@ -1,45 +1,19 @@
-let hobbies = ['Sports', 'Cooking'];
-console.log(hobbies);
+const testResults = [1, 5.3, 1.5, 10.99, -5, 10];
+const storeResults = testResults.slice(0, 2); // Nesse exemplo, o slice vai até o terceiro índice mas não o conclui, ou seja, apenas os índices 0 e 1 aparecem.
 
-hobbies.splice(1, 0, 'Good food');
-console.log('1)', hobbies);
+testResults.push(5.91);
 
-hobbies = ['Sports', 'Cooking'];
-hobbies.splice(0, 1);
-console.log('2)', hobbies);
-
-hobbies = ['Sports', 'Cooking'];
-hobbies.splice(0);
-console.log('3)', hobbies);
-
-hobbies = ['Sports', 'Cooking'];
-hobbies.splice(1);
-console.log('4)', hobbies);
-
-hobbies = ['Sports', 'Cooking'];
-hobbies.splice(-1, 1);  // Exclusivo do .splice()
-console.log('5)', hobbies);
+console.log(testResults, storeResults);
 
 /* 
-  O método .splice() é extremamtente útil, pois nos permite fazer todos os tipos de coisas com matrizes.
-  Obs: É um método que só está disponível em matrizes reais. Não em iteráveis, não em objetos do tipo array.
+  O método splice() é usado para selecionar uma parte de um array e criar uma cópia desse array. 
+  Ele recebe dois argumentos: o índice inicial e o final da parte que queremos copiar. 
+  O array original não é modificado pelo método splice().
 
-  Esse método leva pelo menos dois argumentos, contudo, há outra versão para mais argumentos. 
-    1) Inserir elementos dentro de um array: (linhas );
-        O primiero argumento é o índice em que desejo inserir o elemento. 
-        O segundo argumento é a quantidade de índices que desejo excluir (nesse caso: 0).
-        A partir do terceiro argumento são os elementos que desejo inserir no array.
-
-    2) Excluir elementos dentro de um array: (linhas );
-        O primeiro argumento é o índice em que desejo excluir.
-        O segundo argumento é a quantidade de índices que desejo excluir.
-
-    3) Excluir todos os índices da matriz: (linha );
-        Para isso, basta digitar um único argumento, como 0.
-
-    4) Excluir todos os ítem exceto um: (linha );
-        Basta informar qual índice deseja que permaneça.
-
-    5) Excluir através de um índice negativo. (linha );
-        Inserir um índice negativo pode funcionar para exluir um elemento de trás pra frente.
+CONTEXTUALIZANDO O CÓDIGO:
+  Criamos um array chamado testResults com seis números. 
+  Depois, usamos o método splice() para copiar os dois primeiros elementos desse array (índices 0 e 1) e 
+    armazená-los em outro array chamado storeResults. 
+  Em seguida, adicionamos outro número ao final do array testResults usando o método push(). 
+  Por fim, imprimimos os dois arrays no console.
 */
