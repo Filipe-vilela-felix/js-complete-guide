@@ -1,17 +1,36 @@
-const data = 'new yourk;10.99;2000';
-console.log(data);
-
-const transformedData = data.split(';');
-transformedData[1] = +transformedData[1]; // Transformando uma string em number (Ja visto antes!).
-console.log(transformedData);
-
 const nameFragments = ['Max', 'Schwarz'];
 const name = nameFragments.join(' ');
 console.log(name);
 
+const copiedNameFragments = [...nameFragments];
+nameFragments.push('Mr');
+
+console.log(nameFragments, copiedNameFragments) // Note que a string 'Mr' não estará presente na contante que contém  o spread.
+
+console.log('---------------------');
+
+const prices = [1.99, 5.99, 3.99, 6.59];
+
+console.log(Math.min(...prices));
+console.log(Math.min(prices)); // Note que sem o spread, o resultado é NaN.
+
+console.log('---------------------');
+
+const persons = [{name: 'Max', age: 30}, {name: 'Manuel', age: 31}];
+const copiedPersons = [...persons.map(person => ({
+  name: person.name, 
+  age: person.age
+}))];
+
+persons.push({name: 'Anna', age: 29});  
+persons[0].age = '31'; // Para que essa linha de código não altere a contante que tem o spread, usamos o .map() nela. (linhas 20 a 23);
+
+console.log(persons, copiedPersons);
+
 /* 
-  Método split(): Este método divide uma String em uma lista ordenada de substrings, coloca essas substrings em um array e retorna o array. 
-    A divisão é feita procurando um padrão, onde o padrão é fornecido como o primeiro parâmetro na chamada do método. (linha 4);
-  
-  Método join(): Este método junta todos os elementos de um array (ou um array-like object) em uma string e retorna esta string. (linha 9);
+  Spread Operator (Operador de Propagação):
+    O operador spread extrai todos os elementos de um array e os fornece como uma lista independente de elementos.
+    O operador spread (...) no JavaScript é como uma ferramenta que pega coisas agrupadas, como uma lista de itens ou letras em uma palavra, 
+      e as espalha para que possam ser usadas individualmente. 
+    Ele é útil quando você quer usar itens de uma lista um por um, ou quando quer combinar coisas de diferentes grupos em um só.
 */
