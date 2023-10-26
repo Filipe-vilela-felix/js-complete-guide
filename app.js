@@ -1,18 +1,17 @@
-const prices = [10.99, 5.99, 3.99, 6.59];
-const tax = 0.19;
+const data = 'new yourk;10.99;2000';
+console.log(data);
 
-// let sum = 0;
-// prices.forEach((price) => {
-//   sum += price
-// })
+const transformedData = data.split(';');
+transformedData[1] = +transformedData[1]; // Transformando uma string em number (Ja visto antes!).
+console.log(transformedData);
 
-// console.log(sum);
-
-let sum = prices.reduce((prevValue, curValue, idx, prices) => prevValue + curValue, 0);
-console.log(sum)
-
+const nameFragments = ['Max', 'Schwarz'];
+const name = nameFragments.join(' ');
+console.log(name);
 
 /* 
-  Esse método é uma função que executa uma função de redução (fornecida por você) em cada elemento do array, 
-    resultando em um único valor de retorno.
+  Método split(): Este método divide uma String em uma lista ordenada de substrings, coloca essas substrings em um array e retorna o array. 
+    A divisão é feita procurando um padrão, onde o padrão é fornecido como o primeiro parâmetro na chamada do método. (linha 4);
+  
+  Método join(): Este método junta todos os elementos de um array (ou um array-like object) em uma string e retorna esta string. (linha 9);
 */
