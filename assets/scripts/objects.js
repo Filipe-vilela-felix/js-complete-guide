@@ -65,5 +65,6 @@ addMovieButton.addEventListener('click', addMovieHandler);
 searchBtn.addEventListener('click', searchMovieHandler);
 
 /* 
-    Para melhor entendimento sobre encadeamento, reassista a aula.
+    Para a aula: Spread Operator (...)
+        Assista a aula 225, pois ela foi dada no console do navegador e não no vs code.
 */
