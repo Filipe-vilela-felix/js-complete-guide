@@ -19,10 +19,13 @@ const renderMovies = (filter = '') => {
 
         filteredMovies.forEach((movie) => {
         const movieEl = document.createElement('li');
-        let text = movie.info.title + ' - ';
-        for (const key in movie.info) {
+        const { info, ...otherProps } = movie;
+        console.log(otherProps);
+        const { title: movieTitle } = info;
+        let text = movieTitle + ' - ';
+        for (const key in info) {
             if (key !== 'title') {
-                text = text + `${key}: ${movie.info[key]}`
+                text = text + `${key}: ${info[key]}`
             }
         }
         movieEl.textContent = text;
@@ -65,6 +68,20 @@ addMovieButton.addEventListener('click', addMovieHandler);
 searchBtn.addEventListener('click', searchMovieHandler);
 
 /* 
-    Para a aula: Understanding Objject.assign()
-        Assista a aula 226, pois ela foi dada no console do navegador e não no vs code.
+    A desestruturação é uma funcionalidade do JavaScript que permite extrair dados de arrays, objetos, mapas e conjuntos em suas próprias variáveis. 
+    Isso é extremamente útil quando você quer usar esses valores em seu código.
+
+CONTEXTUALIZANDO O CÓDIGO:
+    1) const { info, ...otherProps } = movie;: 
+        Aqui você está desestruturando o objeto movie. Isso cria duas novas variáveis: info e otherProps. 
+        A variável info contém o valor da propriedade info do objeto movie, e otherProps é um novo objeto que contém todas as outras propriedades 
+            do objeto movie.
+
+    2) const { title: movieTitle } = info;: 
+        Aqui você está desestruturando o objeto info. Isso cria uma nova variável chamada movieTitle que contém o valor da propriedade title do 
+            objeto info. 
+        Isso é útil porque agora você pode se referir ao título do filme usando a variável movieTitle, em vez de ter que escrever info.title.
+
+    3) Você também usou console.log(otherProps); para imprimir no console todas as outras propriedades do objeto movie que não são a propriedade 
+        info. Isso pode ser útil para depuração ou para entender melhor quais outras propriedades estão presentes no objeto.
 */
