@@ -65,6 +65,6 @@ addMovieButton.addEventListener('click', addMovieHandler);
 searchBtn.addEventListener('click', searchMovieHandler);
 
 /* 
-    Para a aula: Spread Operator (...)
-        Assista a aula 225, pois ela foi dada no console do navegador e não no vs code.
+    Para a aula: Understanding Objject.assign()
+        Assista a aula 226, pois ela foi dada no console do navegador e não no vs code.
 */
