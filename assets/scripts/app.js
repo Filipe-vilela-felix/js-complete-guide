@@ -153,7 +153,3 @@ class App {
 }
 
 App.init();
-
-/* 
-  Neste commit foi aprendido a cerca das corrdenadas e posicionamento em JavaScript. Para entender, reassista a aula (290).
-*/
