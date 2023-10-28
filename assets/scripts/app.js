@@ -9,7 +9,7 @@ class DOMHelper {
     const element = document.getElementById(elementId);
     const destinationElement = document.querySelector(newDestinationSelector);
     destinationElement.append(element);
-    element.scrollIntoView({behavior: 'smooth'});
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 }
 
@@ -54,22 +54,22 @@ class Tooltip extends Component {
   create() {
     const tooltipElement = document.createElement('div');
     tooltipElement.className = 'card';
-    const tooltipTemplate = getElementById('tooltip');
+    const tooltipTemplate = document.getElementById('tooltip');
     const tooltipBody = document.importNode(tooltipTemplate.content, true);
     tooltipBody.querySelector('p').textContent = this.text;
     tooltipElement.append(tooltipBody);
 
     const hostElPosLeft = this.hostElement.offsetLeft;
     const hostElPosTop = this.hostElement.offsetTop;
-    const hostElHeght = this.hostElement.clientHeight;
+    const hostElHeight = this.hostElement.clientHeight;
     const parentElementScrolling = this.hostElement.parentElement.scrollTop;
 
     const x = hostElPosLeft + 20;
-    const y = hostElPosTop + hostElHeght - parentElementScrolling - 10;
+    const y = hostElPosTop + hostElHeight - parentElementScrolling - 10;
 
     tooltipElement.style.position = 'absolute';
-    tooltipElement.style.left = x + 'px';   // 500px
-    tooltipElement.style.top = y + 'px';  
+    tooltipElement.style.left = x + 'px'; // 500px
+    tooltipElement.style.top = y + 'px';
 
     tooltipElement.addEventListener('click', this.closeTooltip);
     this.element = tooltipElement;
@@ -95,8 +95,8 @@ class ProjectItem {
     const tooltip = new Tooltip(
       () => {
         this.hasActiveTooltip = false;
-      }, 
-      tooltipText, 
+      },
+      tooltipText,
       this.id
     );
     tooltip.attach();
@@ -170,11 +170,18 @@ class App {
     finishedProjectsList.setSwitchHandlerFunction(
       activeProjectsList.addProject.bind(activeProjectsList)
     );
+
+    document
+      .getElementById('start-analytics-btn')
+      .addEventListener('click', this.startAnalytics);
+  }
+
+  static startAnalytics() {
+    const analyticsScript = document.createElement('script');
+    analyticsScript.src = 'assets/scripts/analytics.js';
+    analyticsScript.defer = true;
+    document.head.append(analyticsScript);
   }
 }
 
 App.init();
-
-/* 
-  Para entendimento do que foi alterado assista a aula (295);
-*/
