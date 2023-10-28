@@ -1,50 +1,92 @@
-// 'THIS' SUMMARY:
+const addMovieButton = document.getElementById('add-movie-btn');
+const searchBtn = document.getElementById('search-btn');
+
+const movies = [];
+
+const renderMovies = (filter = '') => {
+    const movieList = document.getElementById('movie-list');
+
+    if (movies.length === 0) {
+        movieList.classList.remove('visible');
+    } else {
+        movieList.classList.add('visible');
+    }
+    movieList.innerHTML = '';
+
+    const filteredMovies = !filter 
+        ? movies 
+        : movies.filter(movie => movie.info.title.includes(filter));
+
+    filteredMovies.forEach((movie) => {
+        const movieEl = document.createElement('li');
+        const { info, ...otherProps } = movie;
+        console.log(otherProps);
+        // const { title: movieTitle } = info;
+        let { getFormattedTitle } = movie;
+        getFormattedTitle = getFormattedTitle.bind(movie);
+        let text = movie.getFormattedTitle.call(movie) + ' - ';
+        for (const key in info) {
+            if (key !== 'title' && key !== '_title') {
+                text = text + `${key}: ${info[key]}`
+            }
+        }
+        movieEl.textContent = text;
+        movieList.append(movieEl);
+    });
+};
+
+const addMovieHandler = () => {
+    const title = document.getElementById('title').value;  
+    const extraName = document.getElementById('extra-name').value;
+    const extraValue = document.getElementById('extra-value').value;
+
+    // Adicionando validações:
+    if (
+        title.trim() === '' || 
+        extraName.trim() === '' || 
+        extraValue === ''
+    ) {
+        return;
+    }
+
+    const newMovie = {
+        info: {
+            set title(val) {
+                if (val.trim() === '') {
+                    this._title = 'DEFAULT';
+                    return;
+                }
+                this._title = val;
+            },
+            get title() {
+                return this._title;
+            },
+            [extraName]: extraValue
+        },
+        id: Math.random().toString(),
+        getFormattedTitle() {
+            console.log(this);
+            return this.info.title.toUpperCase();
+        }
+    };
+    
+    newMovie.info.title = title;
+    console.log(newMovie.info.title);
+    
+
+    movies.push(newMovie);
+    renderMovies();
+}
+
+const searchMovieHandler = () => {
+    console.log(this);
+    const filterTerm = document.getElementById('filter-title').value;
+    renderMovies(filterTerm);
+};
+
+addMovieButton.addEventListener('click', addMovieHandler);
+searchBtn.addEventListener('click', searchMovieHandler);
 
 /* 
-    A palavra-chave this pode levar a algumas dores de cabeça no JavaScript - este resumo esperançosamente funciona como um remédio.
-    Isso se refere a coisas diferentes, dependendo de onde é usado e como (se usado em uma função) uma função é chamada.
-    Geralmente, isso se refere à "coisa" que chamou uma função (se usada dentro de uma função). Isso pode ser o contexto global, 
-        um objeto ou algum dado/objeto vinculado (por exemplo, quando o navegador vincula isso ao botão que acionou um evento de clique).
+    Para entender essa aula, deve-se assistir a aula 236.
 */
-
-// 1) 'this' no contexto global (ou seja, fora de qualquer função):
-
-function something() {'...'}
-
-console.log(this);  // Registra o objeto global (janela no navegador) - SEMPRE (também no modo estrito)!
-
-// 2) 'this' em função (sem seta) - Chamado no contexto global:
-
-function something() { 
-    console.log(this);
-}
- 
-something();    // Registra o objeto global (janela no navegador) no modo não estrito, indefinido no modo estrito.
-
-// 3) 'this' em uma função de seta - Chamado no contexto global:
-
-const something = () => { 
-    console.log(this);
-}
- 
-something();    // Registra o objeto global (janela no navegador) - SEMPRE (também no modo estrito)!
-
-// 4) 'this' em um método (não-seta) - Chamado em um objeto:
-
-const person = { 
-    name: 'Max',
-    greet: function() { // ou use a abreviação do método: greet() { ... }
-        console.log(this.name);
-    }
-};
-
-// 5) 'this' em um método (função de seta) - Chamado em um objeto:
-
-const person2 = { 
-    name: 'Max',
-    greet: () => {
-        console.log(this.name);
-    }
-};
- 
-person.greet();     // Registra nada (ou algum nome global no objeto de janela), "este" refere-se ao objeto global (janela), mesmo no modo estrito.
