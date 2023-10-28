@@ -3,8 +3,25 @@ const searchBtn = document.getElementById('search-btn');
 
 const movies = [];
 
+const renderMovies = () => {
+    const movieList = document.getElementById('movie-list');
+
+    if (movies.length === 0) {
+        movieList.classList.remove('visible');
+    } else {
+        movieList.classList.add('visible');
+    }
+    movieList.innerHTML = '';
+
+    movies.forEach((movie) => {
+        const movieEl = document.createElement('li');
+        movieEl.textContent = movie.info.title;
+        movieList.append(movieEl);
+    });
+};
+
 const addMovieHandler = () => {
-    const title = document.getElementById('title').value;   // .value indica que não estou interessado no DOM completo, mas somente no valor dele.
+    const title = document.getElementById('title').value;  
     const extraName = document.getElementById('extra-name').value;
     const extraValue = document.getElementById('extra-value').value;
 
@@ -20,18 +37,18 @@ const addMovieHandler = () => {
     const newMovie = {
         info: {
             title,
-            [extraName]: extraValue // Os colchetes são necessários quando queremos usar uma variável para definir o nome de uma propriedade de um objeto.
+            [extraName]: extraValue
         },
         id: Math.random()
     };
 
     movies.push(newMovie);
-    console.log(newMovie);
+    renderMovies();
 }
 
 addMovieButton.addEventListener('click', addMovieHandler);
 
 /* 
 CONTEXTUALIZANDO O CÓDIGO:
-    Adicionando o botão 'ADD MOVIE'.
+    Adicionando a função que renderiza os filmes adicionados. (linhas 6 a 21 e 46);
 */
