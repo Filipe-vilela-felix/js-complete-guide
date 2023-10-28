@@ -9,6 +9,7 @@ class DOMHelper {
     const element = document.getElementById(elementId);
     const destinationElement = document.querySelector(newDestinationSelector);
     destinationElement.append(element);
+    element.scrollIntoView({behavior: 'smooth'});
   }
 }
 
@@ -172,5 +173,5 @@ class App {
 App.init();
 
 /* 
-  Para entendimento do que foi alterado assista a aula (293);
+  Para entendimento do que foi alterado assista a aula (294);
 */
