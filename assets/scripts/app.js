@@ -155,5 +155,5 @@ class App {
 App.init();
 
 /* 
-  Para entender como os atributos extras de dados foram lidos, reassista a essa aula (289).
+  Neste commit foi aprendido a cerca das corrdenadas e posicionamento em JavaScript. Para entender, reassista a aula (290).
 */
