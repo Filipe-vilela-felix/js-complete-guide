@@ -54,8 +54,8 @@ const addMovieHandler = () => {
             [extraName]: extraValue
         },
         id: Math.random().toString(),
-        getFormattedTitle: function() {
-            return this.info.title.toUpperCase();   // Com o .this a lógica entende que "info" se trata do objeto em que ele está.
+        getFormattedTitle() {
+            return this.info.title.toUpperCase();
         }
     };
 
@@ -72,5 +72,5 @@ addMovieButton.addEventListener('click', addMovieHandler);
 searchBtn.addEventListener('click', searchMovieHandler);
 
 /* 
-    Para saber sobre validação de propriedades em um objeto, asissta a aula 228.
+    Encurtando a sintaxe de uma matriz. (linha 57);
 */
