@@ -15,7 +15,13 @@ const renderMovies = () => {
 
     movies.forEach((movie) => {
         const movieEl = document.createElement('li');
-        movieEl.textContent = movie.info.title;
+        let text = movie.info.title + ' - ';
+        for (const key in movie.info) {
+            if (key !== 'title') {
+                text = text + `${key}: ${movie.info[key]}`
+            }
+        }
+        movieEl.textContent = text;
         movieList.append(movieEl);
     });
 };
@@ -50,5 +56,8 @@ addMovieButton.addEventListener('click', addMovieHandler);
 
 /* 
 CONTEXTUALIZANDO O CÓDIGO:
-    Adicionando a função que renderiza os filmes adicionados. (linhas 6 a 21 e 46);
+    O objetivo é produzir a combinação de chave-valor inserida pelo usuário.
+    O que difere o commit anterior para este é que em vez de apenas exibir o título do filme, 
+        estamos exibindo todas as propriedades do objeto info do filme. 
+        Isso é feito usando um loop for-in, que itera sobre todas as propriedades (ou “chaves”) de um objeto. (linhas 18 a 24);
 */
