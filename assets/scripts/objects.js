@@ -3,7 +3,7 @@ const searchBtn = document.getElementById('search-btn');
 
 const movies = [];
 
-const renderMovies = () => {
+const renderMovies = (filter = '') => {
     const movieList = document.getElementById('movie-list');
 
     if (movies.length === 0) {
@@ -13,7 +13,11 @@ const renderMovies = () => {
     }
     movieList.innerHTML = '';
 
-    movies.forEach((movie) => {
+    const filteredMovies = !filter 
+        ? movies 
+        : movies.filter(movie => movie.info.title.includes(filter));
+
+        filteredMovies.forEach((movie) => {
         const movieEl = document.createElement('li');
         let text = movie.info.title + ' - ';
         for (const key in movie.info) {
@@ -52,12 +56,20 @@ const addMovieHandler = () => {
     renderMovies();
 }
 
+const searchMovieHandler = () => {
+    const filterTerm = document.getElementById('filter-title').value;
+    renderMovies(filterTerm);
+};
+
 addMovieButton.addEventListener('click', addMovieHandler);
+searchBtn.addEventListener('click', searchMovieHandler);
 
 /* 
 CONTEXTUALIZANDO O CÓDIGO:
-    O objetivo é produzir a combinação de chave-valor inserida pelo usuário.
-    O que difere o commit anterior para este é que em vez de apenas exibir o título do filme, 
-        estamos exibindo todas as propriedades do objeto info do filme. 
-        Isso é feito usando um loop for-in, que itera sobre todas as propriedades (ou “chaves”) de um objeto. (linhas 18 a 24);
+    - A função searchMovieHandler é uma nova função que obtém o valor do elemento ‘filter-title’ 
+        e passa esse valor para a função renderMovies como o termo de filtro. Isso permite que você filtre os filmes por título. (linhas 59 a 62);
+    
+    - Adicionamos uma funcionalidade de filtro à função renderMovies. Agora a função aceita um argumento opcional chamado filter. 
+        Se nenhum filtro for fornecido, a função irá renderizar todos os filmes na lista de filmes. 
+        Se um filtro for fornecido, a função irá renderizar apenas os filmes cujo título inclui o termo de filtro. (linhas 6 e 16 a 20);
 */
