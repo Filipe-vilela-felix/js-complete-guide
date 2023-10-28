@@ -66,6 +66,7 @@ const addMovieHandler = () => {
 }
 
 const searchMovieHandler = () => {
+    console.log(this);
     const filterTerm = document.getElementById('filter-title').value;
     renderMovies(filterTerm);
 };
@@ -74,11 +75,5 @@ addMovieButton.addEventListener('click', addMovieHandler);
 searchBtn.addEventListener('click', searchMovieHandler);
 
 /* 
-    Os métodos .call() e .apply() no JavaScript são usados para invocar uma função diretamente, com um determinado contexto (this) e argumentos. (linha 27); 
-    A principal diferença entre eles é a maneira como os argumentos são passados para a função:
-        - call(): requer que os parâmetros sejam listados explicitamente. Por exemplo: funcao.call(valorParaThis, arg1, arg2, ...).
-        - apply(): permite que você invoque a função com argumentos como um array. Por exemplo: funcao.apply(valorParaThis, [arg1, arg2, ...]).
-
-    Diferentemente de .call() e .apply(), .bind() não invoca a função imediatamente. 
-        Em vez disso, ele retorna uma nova função com o contexto e os argumentos iniciais vinculados.
+    Para entender essa aula, deve-se assistir a aula 234, pois a maior parte do contúdo foi explicada no console do navegador.
 */
