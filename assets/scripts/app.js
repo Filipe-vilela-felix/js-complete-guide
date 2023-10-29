@@ -189,3 +189,7 @@ class App {
 }
 
 App.init();
+
+/* 
+  Esta aula foi dada a partir do console do navegador. Aula (298);
+*/
