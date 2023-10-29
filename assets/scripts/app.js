@@ -191,5 +191,7 @@ class App {
 App.init();
 
 /* 
-  Esta aula foi dada a partir do console do navegador. Aula (299);
+  Esta aula foi dada a partir do console do navegador. Aula (300);
+
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 */
