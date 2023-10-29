@@ -19,6 +19,17 @@ button.addEventListener('mouseenter', event => {
     console.log(event);
 });
 
-/* 
-    Assistir aula teórica (312).
-*/
+const listItems = document.querySelectorAll('li');
+const list = document.querySelector('ul');
+
+// listItems.forEach(listItem => {
+//     listItem.addEventListener('click', event => {
+//         event.target.classList.toggle('hightlight');
+//     });
+// })
+
+list.addEventListener('click', event => {
+    // console.log(event.currentTarget);
+    // event.target.classList.toggle('hightlight');
+    event.target.closest('li').classList.toggle('hightlight');  
+});
