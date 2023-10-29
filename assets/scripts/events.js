@@ -1,22 +1,24 @@
 const button = document.querySelector('button');
 
 // button.onclick = function() {
-//     alert('Hello there!');
-// }
 
-// ----------------------------------
+// };
 
-// const buttonClickHandler = () => {
-//     alert('Button was clicked!');
-// }
+const buttonClickHandler = () => {
+  alert('Button was clicked!');
+};
 
-// const anotherButtonClickHandler = () => {
-//     console.log('This was clicked!');
-// }
+const anotherButtonClickHandler = () => {
+  console.log('This was clicked!');
+};
 
-// button.onclick = buttonClickHandler;     // Essa linha acabará sendo substituida pela linha de baixo.
+// button.onclick = buttonClickHandler;
 // button.onclick = anotherButtonClickHandler;
 
-// -----------------------------------
+const boundFn = buttonClickHandler.bind(this);
 
-button.addEventListener()   // Mais recomendado do que os das linhas comentadas antarios.
+button.addEventListener('click', boundFn);
+
+setTimeout(() => {
+  button.removeEventListener('click', boundFn);
+}, 2000);
