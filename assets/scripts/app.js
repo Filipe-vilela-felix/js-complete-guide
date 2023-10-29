@@ -173,11 +173,9 @@ class App {
 
     const timerId = setTimeout(this.startAnalytics, 3000);
 
-    document
-      .getElementById('stop-analytics-btn')
-      .addEventListener('click', () => {
-        clearTimeout(timerId);
-      });
+    document.getElementById('stop-analytics-btn').addEventListener('click', () => {
+      clearTimeout(timerId);
+    });
   }
 
   static startAnalytics() {
@@ -189,7 +187,3 @@ class App {
 }
 
 App.init();
-
-/* 
-  Esta aula foi dada a partir do console do navegador. Aula (301);
-*/
