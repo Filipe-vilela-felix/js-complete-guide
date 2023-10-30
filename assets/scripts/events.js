@@ -46,10 +46,11 @@ div.addEventListener('mouseenter', event => {
   console.log(event);
 });
 
-button.addEventListener('click', event => {
+button.addEventListener('click', function(event) {
   event.stopPropagation();
   console.log('CLICKED BUTTON');
   console.log(event);
+  console.log(this);
 });
 
 const listItems = document.querySelectorAll('li');
