@@ -1,41 +1,6 @@
-const myself = {
-  name: 'Max',
-  friends: [
-    {
-      name: 'Manuel',
-      friends: [
-        {
-          name: 'Chris',
-          friends: [
-            {
-              name: 'Hari'
-            },
-            {
-              name: 'Amilia'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'Julia'
-    }
-  ]
-};
-
-function getFriendNames(person) {
-  const collectedNames = [];
-
-  if (!person.friends) {
-    return [];
-  }
-  
-  for (const friend of person.friends) {
-    collectedNames.push(friend.name);
-    collectedNames.push(...getFriendNames(friend));
-  }
-  
-  return collectedNames;
+function randomIntBetween(min, max) {
+  // min: 5, max: 10
+  return Math.floor(Math.random() * (max - min + 1) + min); // 10.999999999999 => 10
 }
 
-console.log(getFriendNames(myself));
+console.log(randomIntBetween(1, 10));
