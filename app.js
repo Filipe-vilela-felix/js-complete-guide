@@ -1,21 +1,41 @@
-// function powerOf(x, n) {
-//     let result = 1;
+const myself = {
+  name: 'Max',
+  friends: [
+    {
+      name: 'Manuel',
+      friends: [
+        {
+          name: 'Chris',
+          friends: [
+            {
+              name: 'Hari'
+            },
+            {
+              name: 'Amilia'
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: 'Julia'
+    }
+  ]
+};
 
-//     for (let i = 0; i < n; i++) {
-//         result *= x;
-//     }
+function getFriendNames(person) {
+  const collectedNames = [];
 
-//     return result;
-// }
-
-function powerOf(x, n) {
-    
-    // if (n === 1) {
-    //     return x;
-    // }
-    // return x * powerOf(x, n - 1);
-
-    return n === 1? x : x * powerOf(x, n -1);
+  if (!person.friends) {
+    return [];
+  }
+  
+  for (const friend of person.friends) {
+    collectedNames.push(friend.name);
+    collectedNames.push(...getFriendNames(friend));
+  }
+  
+  return collectedNames;
 }
 
-console.log(powerOf(2, 3)); // 2 * 2 * 2
+console.log(getFriendNames(myself));
