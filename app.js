@@ -1,41 +1,13 @@
-/*FUNÇÃO PURA*/
+function createTaxCalculator(tax) {
+    function calculateTax(amount) {
+        return amount * tax;
+    }
 
-function add(num1, num2) {
-    return num1 + num2;
+    return calculateTax;
 }
 
-console.log(add(1, 5));
-console.log(add(12, 15));
+const calculateValAmount = createTaxCalculator(0.19);   // Esse é o valor de 'tax' na função createTaxCalculator().
+const CalculateIncomeTaxAmount = createTaxCalculator(0.25);     // Esse é o valor de 'tax' na função createTaxCalculator().
 
-console.log('----------------------');
-
-/*FUNÇÃO IMPURA*/
-
-function addRandom(num1) {
-    return num1 + Math.random();
-}
-
-console.log(addRandom(5));
-
-console.log('----------------------');
-
-let previousResult = 0;
-
-function addMoreNumbers(num1, num2) {
-    const sum = num1 + num2;
-    previousResult = sum;   // Função impura pois apresenta efeito colatera.
-    return sum;
-}
-
-console.log(addMoreNumbers(1, 5));
-
-console.log('----------------------');
-
-const hobbies = ['Sports', 'Cooking'];
-
-function printHobbies(h) {
-    h.push('NEW HOBBIE');
-    console.log(h);
-}
-
-printHobbies(hobbies);
+console.log(calculateValAmount(100));   // Esse é o valor de 'amount' na função calculateTax().
+console.log(calculateValAmount(200));   // Esse é o valor de 'amount' na função calculateTax().
