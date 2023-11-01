@@ -1,6 +1,19 @@
 const button = document.querySelector('button');
 const output = document.querySelector('p');
 
+const getPosition = opts => {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      success => {
+        resolve(success);
+      },
+      error => {},
+      opts
+    );
+  });
+  return promise;
+};
+
 const setTimer = duration => {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -11,16 +24,15 @@ const setTimer = duration => {
 };
 
 function trackUserHandler() {
-  navigator.geolocation.getCurrentPosition(
-    posData => {
-      setTimer(2000).then(data => {
-        console.log(data, posData);
-      });
-    },
-    error => {
-      console.log(error);
-    }
-  );
+  let positionData;
+  getPosition()
+    .then(posData => {
+      positionData = posData;
+      return setTimer(2000);
+    })
+    .then(data => {
+      console.log(data, positionData);
+    });
   setTimer(1000).then(() => {
     console.log('Timer done!');
   });
@@ -28,8 +40,3 @@ function trackUserHandler() {
 }
 
 button.addEventListener('click', trackUserHandler);
-
-/* 
-    Promises são uma maneira de lidar com operações assíncronas em JavaScript. 
-    Uma Promise representa uma operação que ainda não foi concluída, mas é esperada no futuro
-*/
