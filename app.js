@@ -2,22 +2,19 @@ const button = document.querySelector('button');
 const output = document.querySelector('p');
 
 function trackUserHandler() {
-    console.log('Clicked');
+    navigator.geolocation.getCurrentPosition(posData => {
+        console.log(posData);
+    }, error => {
+        console.log(error);
+    });
+    console.log('Getting position...');
 }
 
 button.addEventListener('click', trackUserHandler);
 
-let result = 0;
-for (let i = 0; i < 100000000; i++) {
-    result += i;
-}
-
-console.log(result);
-
 /* 
-    Quando você clica no botão enquanto o loop for está sendo executado, você pode notar que nada acontece até que o loop for termine. 
-    Isso ocorre porque o loop for está bloqueando o restante do código de ser executado - incluindo a função do ouvinte de eventos do botão.
-
-    Isso é chamado de ‘blocking code’. O JavaScript tem uma ‘fila de eventos’ onde armazena todos os eventos que precisam ser processados. 
-    No entanto, ele só pode chegar a esses eventos quando terminar de executar todo o resto do código.
+    Como mencionei antes, JavaScript é uma linguagem de programação de thread única, o que significa que só pode fazer uma coisa de cada vez. 
+    No entanto, quando se trata de operações assíncronas como getCurrentPosition, 
+        JavaScript não espera que a operação seja concluída antes de passar para a próxima linha de código. 
+    Em vez disso, ele continua executando o restante do código e volta para lidar com o resultado da operação assíncrona quando estiver pronto.
 */
