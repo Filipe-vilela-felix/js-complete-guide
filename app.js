@@ -1,25 +1,35 @@
 const button = document.querySelector('button');
 const output = document.querySelector('p');
 
-function trackUserHandler() {
-    navigator.geolocation.getCurrentPosition(posData => {
-        setTimeout(() => {
-            console.log(posData);
-        }, 2000);
-    }, error => {
-        console.log(error);
-    });
+const setTimer = duration => {
+  const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-        console.log('Timer done');
-    }, 0);
-    console.log('Getting position...');
+      resolve('Done!');
+    }, duration);
+  });
+  return promise;
+};
+
+function trackUserHandler() {
+  navigator.geolocation.getCurrentPosition(
+    posData => {
+      setTimer(2000).then(data => {
+        console.log(data, posData);
+      });
+    },
+    error => {
+      console.log(error);
+    }
+  );
+  setTimer(1000).then(() => {
+    console.log('Timer done!');
+  });
+  console.log('Getting position...');
 }
 
 button.addEventListener('click', trackUserHandler);
 
 /* 
-    Como mencionei antes, JavaScript é uma linguagem de programação de thread única, o que significa que só pode fazer uma coisa de cada vez. 
-    No entanto, quando se trata de operações assíncronas como getCurrentPosition, 
-        JavaScript não espera que a operação seja concluída antes de passar para a próxima linha de código. 
-    Em vez disso, ele continua executando o restante do código e volta para lidar com o resultado da operação assíncrona quando estiver pronto.
+    Promises são uma maneira de lidar com operações assíncronas em JavaScript. 
+    Uma Promise representa uma operação que ainda não foi concluída, mas é esperada no futuro
 */
