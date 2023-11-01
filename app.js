@@ -1,19 +1,23 @@
-function productDescription(strings, productName, productPrice) {
-  console.log(strings);
-  console.log(productName);
-  console.log(productPrice);
-  let priceCategory = 'pretty cheap regarding its price';
-  if (productPrice > 20) {
-    priceCategory = 'fairly priced';
-  }
-  // return `${strings[0]}${productName}${strings[1]}${priceCategory}${
-  //   strings[2]
-  // }`;
-  return {name: productName, price: productPrice};
+const button = document.querySelector('button');
+const output = document.querySelector('p');
+
+function trackUserHandler() {
+    console.log('Clicked');
 }
 
-const prodName = 'JavaScript Course';
-const prodPrice = 29.99;
+button.addEventListener('click', trackUserHandler);
 
-const productOutput = productDescription`This product (${prodName}) is ${prodPrice}.`;
-console.log(productOutput);
+let result = 0;
+for (let i = 0; i < 100000000; i++) {
+    result += i;
+}
+
+console.log(result);
+
+/* 
+    Quando você clica no botão enquanto o loop for está sendo executado, você pode notar que nada acontece até que o loop for termine. 
+    Isso ocorre porque o loop for está bloqueando o restante do código de ser executado - incluindo a função do ouvinte de eventos do botão.
+
+    Isso é chamado de ‘blocking code’. O JavaScript tem uma ‘fila de eventos’ onde armazena todos os eventos que precisam ser processados. 
+    No entanto, ele só pode chegar a esses eventos quando terminar de executar todo o resto do código.
+*/
