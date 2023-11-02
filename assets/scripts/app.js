@@ -29,7 +29,10 @@ function sendHttpRequest(method, url, data) {
   // });
 
   // return promise;
-  return fetch(url).then(response => {
+  return fetch(url, {
+    method: method,
+    body: JSON.stringify(data)
+  }).then(response => {
     return response.json();
   });
 }
@@ -82,7 +85,3 @@ postList.addEventListener('click', event => {
     );
   }
 });
-
-/* 
-    https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
-*/
