@@ -12,6 +12,7 @@
   "author": "Maximilian Schwarzmueller",
   "license": "ISC",
   "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^6.4.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
