@@ -1,4 +1,4 @@
-import { DOMHelper } from '../Utility/DOMhelper.js';
+import { DOMHelper } from '../Utility/DOMHelper.js';
 import { Tooltip } from './Tooltip.js';
 
 export class ProjectItem {
