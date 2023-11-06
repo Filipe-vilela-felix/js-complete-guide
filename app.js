@@ -1,27 +1,11 @@
-console.log('-------------- localStorage --------------');
-
 const storeBtn = document.getElementById('store-btn');
 const retrBtn = document.getElementById('retrieve-btn');
 
-const userId = 'ul123';
-const user = {
-    name: 'Max',
-    age: 30,
-    hobbies: ['Sports', 'Cooking']
-};
-
 storeBtn.addEventListener('click', () => {
-    sessionStorage.setItem('uid', userId);
-    localStorage.setItem('user', JSON.stringify(user)); "{}"
+    const userId = 'u123';
+    document.cookie = `uid=${userId}`;
 });
 
 retrBtn.addEventListener('click', () => {
-    const extractedId = sessionStorage.getItem('uid', userId);
-    const extractedUser = JSON.parse(localStorage.getItem('user', user));
-    console.log(extractedUser);
-    if (extractedId) {
-        console.log('Got the id - ' + extractedId);
-    } else {
-        console.log('Could not find id.');
-    }
+    console.log(document.cookie);
 });
