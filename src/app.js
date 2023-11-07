@@ -5,14 +5,14 @@ button.addEventListener('click', () => {
   const text = textParagraph.textContent;
   if (navigator.clipboard) {
     navigator.clipboard
-    .writeText(text)
-    .then(result => {
-      console.log(result);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+      .writeText(text)
+      .then(result => {
+        console.log(result);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   } else {
-    alert('Feature not avaliable, please copy manually!');
+    alert('Feature not available, please copy manually!');
   }
 });
