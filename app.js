@@ -1,16 +1,8 @@
-const fs = require('fs');   // A função require() é usada para importar módulos em Node.js. Neste caso, está importando o módulo ‘fs’.
+const http = require('http');
 
-fs.readFile('user-data.txt', (err, data) => {
-    if (err) {
-        console.log(err);
-    }
-    console.log(data.toString());
+const server = http.createServer((request, response) => {
+    response.write('Hello there!');
+    response.end();
 });
 
-fs.writeFile('user-data.txt', 'username=Max', err => {
-    if (err) {
-        console.log(err); 
-    } else {
-        console.log('wrote to file!');
-    }
-});
+server.listen(3000);
