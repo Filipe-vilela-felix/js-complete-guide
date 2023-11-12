@@ -1,34 +1,32 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const { generateText, createElement, validateInput } = require('./util');
 
-const locationRoutes = require('./routes/location');
+const initApp = () => {
+  // Initializes the app, registers the button click listener
+  const newUserButton = document.querySelector('#btnAddUser');
+  newUserButton.addEventListener('click', addUser);
+};
 
-const app = express();
+const addUser = () => {
+  // Fetches the user input, creates a new HTML element based on it
+  // and appends the element to the DOM
+  const newUserNameInput = document.querySelector('input#name');
+  const newUserAgeInput = document.querySelector('input#age');
 
-// app.set('view engine', 'ejs');
-// app.set('views', 'views');
+  if (
+    !validateInput(newUserNameInput.value, true, false) ||
+    !validateInput(newUserAgeInput.value, false, true)
+  ) {
+    return;
+  }
 
-app.use(bodyParser.json());
+  const userList = document.querySelector('.user-list');
+  const outputText = generateText(
+    newUserNameInput.value,
+    newUserAgeInput.value
+  );
+  const element = createElement('li', outputText, 'user-item');
+  userList.appendChild(element);
+};
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
-app.use(locationRoutes);
-
-// app.use((req, res, next) => {
-//   res.setHeader('Content-Type', 'text/html');
-//   next();
-// });
-
-// app.use((req, res, next) => {
-//   const userName = req.body.username || 'Unknown User';
-//   res.render('index', {
-//     user: userName
-//   });
-// });
-
-app.listen(3000);
+// Start the app!
+initApp();
