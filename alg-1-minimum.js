@@ -1,17 +1,19 @@
-function getMin(numbers) {
-    if (!numbers.length) {
+function getMin(numbers) { // [3, 1, 2]
+    if (!numbers.length) { // 1 execution
         throw new Error('Should not be an ampty array!');
     }
-    let currentMinimum = numbers[0];
+    let currentMinimum = numbers[0]; // 1 execution
 
-    for (let i = 1; i < numbers.length; i++) {
-        if (numbers[i] < currentMinimum) {
-            currentMinimum = numbers[i];
+    for (let i = 1; i < numbers.length; i++) { // 1 execution
+        if (numbers[i] < currentMinimum) { // 2 executions
+            currentMinimum = numbers[i]; // 1 execution
         }
     }
 
-    return currentMinimum;
+    return currentMinimum; // 1 execution
 }
+
+// T = n => Linear Time Complexity => O(n)
 
 function getMin2(numbers) {
     if (!numbers.length) {
