@@ -21,9 +21,9 @@ function getMin2(numbers) {
     }
 
     for (let i = 0; i < numbers.length; i++) {
-        let outerElement = numbers[i];
+        let outerElement = numbers[i]; // n times
         for (let j = i + 1; j < numbers.length; j++) {
-            let innerElement = numbers[j];
+            let innerElement = numbers[j]; // n times
 
             if (outerElement > innerElement) {
                 // swap
@@ -38,6 +38,8 @@ function getMin2(numbers) {
 
     return numbers[0];
 }
+
+// Quadratic Time Complexy => n * n => O(n^2)
 
 const testNumbers = [3, 1, 2];
 
